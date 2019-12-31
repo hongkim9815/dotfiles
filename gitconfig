@@ -5,3 +5,6 @@
 	default = simple
 [include]
 	path = ~/.gitconfig.local
+[user]
+	email = hongkim9815@gmail.com
+	name = Kihong Kim

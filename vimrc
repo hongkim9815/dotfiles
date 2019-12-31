@@ -91,7 +91,6 @@ let g:SrcExpl_jumpKey = "<ENTER>"
 let g:SrcExpl_gobackKey = "<SPACE>"
 let g:SrcExpl_isUpdateTags = 0
 
-
 " gitgutter
 let g:gitgutter_max_signs = 1000
 
@@ -204,6 +203,14 @@ augroup END
     \ exe "normal! g`\"" |
     \ endif
 :autocmd WinEnter * if &buftype ==# 'quickfix' && winnr('$') == 1 | quit | endif
+
+" GNU Coding Style
+function! GnuIndent()
+    setlocal cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
+    setlocal shiftwidth=2
+    setlocal tabstop=8
+endfunction
+au FileType c,cpp call GnuIndent()
 
 command Wq :wq
 command WQ :wq

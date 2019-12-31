@@ -15,6 +15,8 @@ install () {
   ln -s $NEW $OLD
 }
 
+sudo apt-get install vim
+
 install gitignore
 install gitconfig
 install vimrc
