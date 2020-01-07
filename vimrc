@@ -139,8 +139,8 @@ if version >= 702
 	autocmd BufWinLeave * call clearmatches()
 endif
 
-autocmd FileType c,cpp,java,python setlocal expandtab
-autocmd FileType html,php,js,css setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd FileType c,cpp,java,python,php setlocal expandtab
+autocmd FileType html,js,css setlocal tabstop=2 softtabstop=2 shiftwidth=2
 set display+=uhex
 if has('extra_search')
 	set hlsearch
