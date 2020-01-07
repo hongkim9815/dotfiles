@@ -84,6 +84,8 @@ augroup autoformat_settings
   autocmd FileType vue AutoFormatBuffer prettier
 augroup END
 
+autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+
 " jedi-vim
 autocmd FileType python setlocal completeopt-=preview
 
@@ -169,6 +171,10 @@ nnoremap * *zz
 nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
+
+" Utils
+nnoremap <C-a> ggvG
+vnoremap <C-a> vggvG
 
 " Ignore mistakes
 command Wq :wq
