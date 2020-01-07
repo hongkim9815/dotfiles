@@ -1,5 +1,5 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible
+filetype off
 
 " Manual vim-plug installation
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -28,23 +28,34 @@ Plug 'garbas/vim-snipmate'
 Plug 'honza/vim-snippets'
 Plug 'wesleyche/srcexpl'
 
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+Plug 'google/vim-glaive'
+
 call plug#end()
+call glaive#Install()
 
 " syntatic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_ignore_extensions = '\c\v^([gx]?z|lzma|bz2)$'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 let g:syntastic_quiet_messages = { "level": "warnings" }
 let g:syntastic_cpp_compiler_options = '-std=c++11'
 let g:syntastic_mode_map = { "mode": "active",
                            \ "active_filetypes": [],
                            \ "passive_filetypes": ["scala"] }
+
+function! SyntasticCheckHook(errors)
+    if !empty(a:errors)
+        let g:syntastic_loc_list_height = min([len(a:errors), 10])
+    endif
+endfunction
+
 function! ToggleSyntastic()
     for i in range(1, winnr('$'))
         let bnum = winbufnr(i)
@@ -58,11 +69,23 @@ endfunction
 
 nnoremap <F4> :call ToggleSyntastic()<CR>
 
-" let g:syntastic_python_checkers = ['flake8']
+" autoformat for google coding style
+augroup autoformat_settings
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn
+  autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
+  autocmd FileType java AutoFormatBuffer google-java-format
+  autocmd FileType python AutoFormatBuffer yapf
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+  autocmd FileType rust AutoFormatBuffer rustfmt
+  autocmd FileType vue AutoFormatBuffer prettier
+augroup END
 
 " jedi-vim
 autocmd FileType python setlocal completeopt-=preview
-let g:jedi#show_call_signatures = "0"
 
 " Nerd-tree
 " let g:NERDTreeDirArrows=0
@@ -70,6 +93,7 @@ let g:NERDTreeDirArrowExpandable = '+'
 let g:NERDTreeDirArrowCollapsible = '-'
 autocmd VimEnter * NERDTree | wincmd p
 autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+
 " Close all open buffers on entering a window if the only
 " buffer that's left is the NERDTree buffer
 function! s:CloseIfOnlyNerdTreeLeft()
@@ -91,13 +115,12 @@ let g:SrcExpl_jumpKey = "<ENTER>"
 let g:SrcExpl_gobackKey = "<SPACE>"
 let g:SrcExpl_isUpdateTags = 0
 
-" gitgutter
-let g:gitgutter_max_signs = 1000
-
 " ctrlp
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
+" vimrc fundamental setting
 syntax on
 set number
 set background=dark
@@ -108,23 +131,12 @@ set shiftwidth=2
 set scrolloff=4
 set expandtab
 set smartindent
-set nowrap
+set wrap
 set undolevels=1000
 set laststatus=2
 set mouse=a
 " Briefly jump to the matching one when a bracket is inserted
 set showmatch
-
-" set for tex
-if has("autocmd")
-  au BufReadPost .tex set filetype=tex
-  au filetype tex set grepprg=grep\ -nH\ $*
-  au filetype tex set ai
-  au FileType c,cpp,json,markdown,perl,python,java
-      \ setlocal softtabstop=4 shiftwidth=4 tabstop=6
-"  au FileType java
-"      \ setlocal softtabstop=6 shiftwidth=6 tabstop=6
-endif
 
 colorscheme hybrid
 
@@ -152,9 +164,6 @@ autocmd InsertLeave * set nopaste
 " Move between splitted windows
 nnoremap <tab> <C-W>w
 
-" To remove highlights
-nnoremap <C-l> :nohlsearch<CR>
-
 " Center display after searching
 nnoremap n nzz
 nnoremap N Nzz
@@ -162,6 +171,14 @@ nnoremap * *zz
 nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
+
+" Ignore mistakes
+command Wq :wq
+command WQ :wq
+command W :w
+command Wa :wa
+command WA :wa
+command Q :q
 
 if &term =~ "screen"
   " 256 colors
@@ -198,23 +215,11 @@ augroup vimrc
   autocmd FileType python imap <F6> <Esc>:w<CR>:!python3 %<CR>
 augroup END
 
- autocmd BufReadPost *
+
+" Cursor line keep
+autocmd BufReadPost *
     \ if line("'\"") > 1 && line("'\"") <= line("$") |
     \ exe "normal! g`\"" |
     \ endif
 :autocmd WinEnter * if &buftype ==# 'quickfix' && winnr('$') == 1 | quit | endif
 
-" GNU Coding Style
-function! GnuIndent()
-    setlocal cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
-    setlocal shiftwidth=2
-    setlocal tabstop=8
-endfunction
-au FileType c,cpp call GnuIndent()
-
-command Wq :wq
-command WQ :wq
-command W :w
-command Wa :wa
-command WA :wa
-command Q :q
