@@ -133,7 +133,7 @@ set shiftwidth=2
 set scrolloff=4
 set expandtab
 set smartindent
-set wrap
+set nowrap
 set undolevels=1000
 set laststatus=2
 set mouse=a
