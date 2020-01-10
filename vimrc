@@ -47,24 +47,24 @@ let g:syntastic_check_on_wq = 1
 let g:syntastic_quiet_messages = { "level": "warnings" }
 let g:syntastic_cpp_compiler_options = '-std=c++11'
 let g:syntastic_mode_map = { "mode": "active",
-                           \ "active_filetypes": [],
-                           \ "passive_filetypes": ["scala"] }
+      \ "active_filetypes": [],
+      \ "passive_filetypes": ["scala"] }
 
 function! SyntasticCheckHook(errors)
-    if !empty(a:errors)
-        let g:syntastic_loc_list_height = min([len(a:errors), 10])
-    endif
+  if !empty(a:errors)
+    let g:syntastic_loc_list_height = min([len(a:errors), 10])
+  endif
 endfunction
 
 function! ToggleSyntastic()
-    for i in range(1, winnr('$'))
-        let bnum = winbufnr(i)
-        if getbufvar(bnum, '&buftype') == 'quickfix'
-            lclose
-            return
-        endif
-    endfor
-    SyntasticCheck
+  for i in range(1, winnr('$'))
+    let bnum = winbufnr(i)
+    if getbufvar(bnum, '&buftype') == 'quickfix'
+      lclose
+      return
+    endif
+  endfor
+  SyntasticCheck
 endfunction
 
 nnoremap <F4> :call ToggleSyntastic()<CR>
@@ -88,6 +88,11 @@ autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
 " jedi-vim
 autocmd FileType python setlocal completeopt-=preview
+let g:jedi#show_call_signatures_delay = 2500
+autocmd ColorScheme *
+      \ hi jediFunction ctermfg=250 ctermbg=240 |
+      \ hi jediFat ctermfg=232 ctermbg=250
+
 
 " Nerd-tree
 " let g:NERDTreeDirArrows=0
@@ -139,6 +144,7 @@ set laststatus=2
 set mouse=a
 " Briefly jump to the matching one when a bracket is inserted
 set showmatch
+set cul
 
 colorscheme hybrid
 
@@ -150,12 +156,12 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 if version >= 702
-	autocmd BufWinLeave * call clearmatches()
+  autocmd BufWinLeave * call clearmatches()
 endif
 
 set display+=uhex
 if has('extra_search')
-	set hlsearch
+  set hlsearch
 endif
 
 " Exit Paste mode when leaving Insert mode
@@ -220,10 +226,10 @@ augroup vimrc
 augroup END
 
 
-" Cursor line keep
+" keep cursor line and display it to the center
 autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \ exe "normal! g`\"" |
-    \ endif
-:autocmd WinEnter * if &buftype ==# 'quickfix' && winnr('$') == 1 | quit | endif
+      \ if line("'\"") > 1 && line("'\"") <= line("$") |
+      \ exe "normal! g`\"" |
+      \ endif
 
+autocmd BufWinEnter * exe "normal zz"
