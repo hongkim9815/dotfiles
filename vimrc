@@ -2,7 +2,8 @@ set nocompatible
 filetype off
 
 " Manual vim-plug installation
-" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" curl -fLo ~/.vim/autoload/plug.vim \
+"      --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 call plug#begin()
 
@@ -42,17 +43,13 @@ set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
-let g:syntastic_quiet_messages = { "level": "warnings" }
 let g:syntastic_cpp_compiler_options = '-std=c++11'
-let g:syntastic_mode_map = { "mode": "active",
-      \ "active_filetypes": [],
-      \ "passive_filetypes": ["scala"] }
 
 function! SyntasticCheckHook(errors)
   if !empty(a:errors)
-    let g:syntastic_loc_list_height = min([len(a:errors), 10])
+    let g:syntastic_loc_list_height = min([len(a:errors), 8]) + 2
   endif
 endfunction
 
@@ -83,16 +80,14 @@ augroup autoformat_settings
   autocmd FileType rust AutoFormatBuffer rustfmt
   autocmd FileType vue AutoFormatBuffer prettier
 augroup END
-
 autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
 " jedi-vim
 autocmd FileType python setlocal completeopt-=preview
-let g:jedi#show_call_signatures_delay = 2500
+let g:jedi#show_call_signatures_delay = 0
 autocmd ColorScheme *
-      \ hi jediFunction ctermfg=250 ctermbg=240 |
-      \ hi jediFat ctermfg=232 ctermbg=250
-
+      \ highlight jediFunction ctermfg=250 ctermbg=240 |
+      \ highlight jediFat ctermfg=232 ctermbg=250
 
 " Nerd-tree
 " let g:NERDTreeDirArrows=0
@@ -145,12 +140,15 @@ set mouse=a
 " Briefly jump to the matching one when a bracket is inserted
 set showmatch
 set cul
+set colorcolumn=100
+
+autocmd ColorScheme * highlight ColorColumn ctermbg=237
 
 colorscheme hybrid
 
 " Highlight trailing whitespace
-highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+highlight ExtraWhitespace ctermbg=darkgreen
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
@@ -205,19 +203,7 @@ if &term =~ "screen"
   endif
 endif
 
-augroup vimrc
-  " C, C++ compile
-  autocmd FileType c,cpp map <F5> :w<CR>:make %<CR>
-  autocmd FileType c,cpp imap <F5> <Esc>:w<CR>:make %<CR>
-  autocmd FileType c
-        \ if !filereadable('Makefile') && !filereadable('makefile') |
-        \   setlocal makeprg=gcc\ -o\ %< |
-        \ endif
-  autocmd FileType cpp
-        \ if !filereadable('Makefile') && !filereadable('makefile') |
-        \   setlocal makeprg=g++\ -o\ %< |
-        \ endif
-
+augroup autocompile
   " Python 2, 3
   autocmd FileType python map <F5> :w<CR>:!python %<CR>
   autocmd FileType python imap <F5> <Esc>:w<CR>:!python %<CR>
@@ -229,7 +215,7 @@ augroup END
 " keep cursor line and display it to the center
 autocmd BufReadPost *
       \ if line("'\"") > 1 && line("'\"") <= line("$") |
-      \ exe "normal! g`\"" |
+      \ exe "normal g`\"" |
       \ endif
 
 autocmd BufWinEnter * exe "normal zz"
