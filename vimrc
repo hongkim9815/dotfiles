@@ -140,7 +140,7 @@ set mouse=a
 " Briefly jump to the matching one when a bracket is inserted
 set showmatch
 set cul
-set colorcolumn=100
+set colorcolumn=80
 
 autocmd ColorScheme * highlight ColorColumn ctermbg=237
 
