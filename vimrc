@@ -140,7 +140,7 @@ set mouse=a
 " Briefly jump to the matching one when a bracket is inserted
 set showmatch
 set cul
-set colorcolumn=80
+set colorcolumn=100
 
 autocmd ColorScheme * highlight ColorColumn ctermbg=237
 
@@ -210,7 +210,6 @@ augroup autocompile
   autocmd FileType python map <F6> :w<CR>:!python3 %<CR>
   autocmd FileType python imap <F6> <Esc>:w<CR>:!python3 %<CR>
 augroup END
-
 
 " keep cursor line and display it to the center
 autocmd BufReadPost *
