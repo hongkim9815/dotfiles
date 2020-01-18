@@ -27,7 +27,6 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
 Plug 'honza/vim-snippets'
-Plug 'wesleyche/srcexpl'
 
 Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
@@ -48,6 +47,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
 let g:syntastic_cpp_compiler_options = '-std=c++11'
+let g:syntastic_python_python_exec = 'python3'
 
 function! SyntasticCheckHook(errors)
   if !empty(a:errors)
@@ -86,7 +86,8 @@ autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
 " jedi-vim
 autocmd FileType python setlocal completeopt-=preview
-let g:jedi#show_call_signatures_delay = 0
+let g:jedi#show_call_signatures = "0"
+let g:jedi#popup_on_dot = 0
 autocmd ColorScheme *
       \ highlight jediFunction ctermfg=250 ctermbg=240 |
       \ highlight jediFat ctermfg=232 ctermbg=250
@@ -110,19 +111,10 @@ function! s:CloseIfOnlyNerdTreeLeft()
   endif
 endfunction
 
-" srcexpl
-nnoremap <silent> <F3> :SrcExplToggle<CR>
-set tag=./tags;/
-let g:SrcExpl_winHeight = 8
-let g:SrcExpl_refreshTime = 100
-let g:SrcExpl_jumpKey = "<ENTER>"
-let g:SrcExpl_gobackKey = "<SPACE>"
-let g:SrcExpl_isUpdateTags = 0
-
-" ctrlp
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+" gitgutter
+autocmd BufWritePost * GitGutter
+let g:gitgutter_max_signs= 1000
+autocmd ColorScheme * highlight GitGutterDelete ctermfg=red
 
 " vimrc fundamental setting
 syntax on
@@ -144,13 +136,9 @@ set showmatch
 set cul
 set colorcolumn=100
 
-autocmd ColorScheme * highlight ColorColumn ctermbg=237
-
-colorscheme hybrid
-
 " Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=darkgreen
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=darkgreen
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
@@ -158,6 +146,11 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 if version >= 702
   autocmd BufWinLeave * call clearmatches()
 endif
+
+" Colorscheme Active
+autocmd ColorScheme * highlight ColorColumn ctermbg=237
+autocmd ColorScheme * highlight MatchParen ctermfg=221
+colorscheme hybrid
 
 set display+=uhex
 if has('extra_search')
@@ -170,17 +163,26 @@ autocmd InsertLeave * set nopaste
 " Move between splitted windows
 nnoremap <tab> <C-W>w
 
-" Center display after searching
+" Remove highlights
+nnoremap <C-h> :nohlsearch<CR>
+
+" Display center
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
+nnoremap <PageUp> <C-u>zz
+nnoremap <PageDown> <C-d>zz
+inoremap <PageUp> <ESC><C-u>zz
+inoremap <PageDown> <ESC><C-d>zz
+autocmd BufWinEnter * exe "normal zz"
 
 " Utils
 nnoremap <C-a> ggvG
 vnoremap <C-a> vggvG
+nnoremap <C-u> <C-r>
 
 " Ignore mistakes
 command Wq :wq
@@ -206,7 +208,7 @@ if &term =~ "screen"
 endif
 
 augroup autocompile
-  " Python 2, 3
+  " Python 2 and Python 3
   autocmd FileType python map <F5> :w<CR>:!python %<CR>
   autocmd FileType python imap <F5> <Esc>:w<CR>:!python %<CR>
   autocmd FileType python map <F6> :w<CR>:!python3 %<CR>
@@ -219,4 +221,3 @@ autocmd BufReadPost *
       \ exe "normal g`\"" |
       \ endif
 
-autocmd BufWinEnter * exe "normal zz"
