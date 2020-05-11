@@ -162,6 +162,7 @@ autocmd InsertLeave * set nopaste
 
 " Move between splitted windows
 nnoremap <tab> <C-W>w
+nnoremap <S-tab> <C-W>W
 
 " Remove highlights
 nnoremap <C-h> :nohlsearch<CR>
