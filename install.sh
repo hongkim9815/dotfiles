@@ -20,6 +20,8 @@ sudo apt-get install vim
 install gitignore
 install gitconfig
 install vimrc
+install zshrc
+install ideavimrc
 
 if [ ! -f ~/.vim/autoload/plug.vim ]; then
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
