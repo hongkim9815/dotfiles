@@ -15,15 +15,13 @@ install () {
   ln -s $NEW $OLD
 }
 
-if [[ `uname` == "Darwin" ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
     brew install vim
     brew install git
-    brew install gitmoji
 
-elif command apt > /dev/null; then
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     sudo apt-get install vim
     sudo apt-get install git
-    sudo apt-get install gitmoji
 
 fi
 
