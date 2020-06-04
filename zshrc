@@ -1,7 +1,9 @@
-if [[ `uname` == "Darwin" ]]; then
+#!/usr/bin/env bash
+
+if [ "$(uname)" = "Darwin" ]; then
     eval $(/usr/local/bin/brew shellenv)
 
-elif command apt > /dev/null; then
+elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
     eval $(/bin/brew shellenv)
     eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
     alias fn='echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode'

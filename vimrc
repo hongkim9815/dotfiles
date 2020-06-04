@@ -1,10 +1,6 @@
 set nocompatible
 filetype off
 
-" Manual vim-plug installation
-" curl -fLo ~/.vim/autoload/plug.vim \
-"      --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
 call plug#begin()
 
 " UI
@@ -188,6 +184,8 @@ nnoremap <C-u> <C-r>
 
 " Ignore mistakes
 command Wq :wq
+command Qw :wq
+command QW :wq
 command WQ :wq
 command W :w
 command Wa :wa
