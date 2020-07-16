@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "$(uname -s) 1 5" = "Darwin" ]
+if [ "$(uname -s)" = "Darwin" ]
 then # MacOS
   eval $(/usr/local/bin/brew shellenv)
 
