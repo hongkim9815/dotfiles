@@ -30,6 +30,8 @@ Plug 'google/vim-glaive'
 
 Plug 'Vimjas/vim-python-pep8-indent'
 
+Plug 'hashivim/vim-terraform'
+
 call plug#end()
 call glaive#Install()
 

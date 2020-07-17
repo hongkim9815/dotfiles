@@ -36,5 +36,11 @@ if [ ! -f ~/.vim/autoload/plug.vim ]; then
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
-git clone git@github.com:hongkim9815/dotfiles_private_setting -- ~/.dotfiles_private_setting
+if [ "$1" == "private" ]; then
+  if [ -d ~/.dotfiles_private_setting ]; then
+    cd ~/.dotfiles_private_setting && git pull
+  else
+    git clone git@github.com:hongkim9815/dotfiles_private_setting -- ~/.dotfiles_private_setting
+  fi
+fi
 
