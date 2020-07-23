@@ -20,8 +20,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     brew install git
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    sudo apt-get install vim
-    sudo apt-get install git
+    sudo apt-get update
+    sudo apt install -y vim git zsh
 
 fi
 
@@ -30,6 +30,15 @@ install gitconfig
 install vimrc
 install zshrc
 install ideavimrc
+
+if [ ! -d ~/.zsh/zsh-autosuggestions ]; then
+  cd ~/.zsh/zsh-autosuggestions && git pull
+else
+  if [ ! -d ~/.zsh ]; then
+    mkdir ~/.zsh
+  fi
+  git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+fi
 
 if [ ! -f ~/.vim/autoload/plug.vim ]; then
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
