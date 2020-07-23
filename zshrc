@@ -35,6 +35,7 @@ alias gmo='gitmoji -c'
 alias src='source ~/.zshrc'
 alias zshrc='vi ~/.zshrc'
 alias vimrc='vi ~/.vimrc'
+alias keymap='~/.dotfiles/keymap.sh'
 
 
 # Mistakes
@@ -46,6 +47,7 @@ if [ -d ~/.dotfiles_private_setting ]; then
   source ~/.dotfiles_private_setting/*.zshrc.sh
 fi
 
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/eric/.sdkman"
