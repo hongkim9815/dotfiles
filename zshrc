@@ -13,20 +13,17 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
 fi
 
-
 # Zsh
 PROMPT='%F{208}%n%f in %F{226}%~%f $ '
 ZSH_THEME="agnoster"
-
 
 # Ruby
 PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-
 # Abbreviations
-alias ls='ls -G'
-alias ll='ls -lG'
+alias ls='ls -Ga'
+alias ll='ls -lGa'
 alias gst='git status'
 alias gad='git add'
 alias gps='git push'
@@ -36,11 +33,14 @@ alias src='source ~/.zshrc'
 alias zshrc='vi ~/.zshrc'
 alias vimrc='vi ~/.vimrc'
 alias keymap='~/.dotfiles/keymap.sh'
-
+alias python2='/usr/bin/python'
+alias python='/usr/bin/python3'
+alias pip='~/.local/bin/pip3.7'
+export PYTHONPATH="${PYTHONPATH}:~/.local/bin"
 
 # Mistakes
-alias sl='ls -G'
-
+alias sl='ls -Ga'
+alias iv='vi'
 
 # Workspaces
 if [ -d ~/.dotfiles_private_setting ]; then
