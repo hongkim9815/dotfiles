@@ -184,6 +184,10 @@ nnoremap <C-a> ggvG
 vnoremap <C-a> vggvG
 nnoremap <C-u> <C-r>
 
+" Unmap
+noremap <S-Up> <Nop>
+noremap <S-Down> <Nop>
+
 " Ignore mistakes
 command Wq :wq
 command Qw :wq
