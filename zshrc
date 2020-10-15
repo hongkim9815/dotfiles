@@ -5,6 +5,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
   alias ls='ls -Ga'
   alias ll='ls -lGa'
+  alias python2='/usr/bin/python'
+  alias python='python3.7'
+  alias pip='pip3'
+  export PYTHONPATH="${PYTHONPATH}:~/usr/local/opt/python@3.7/bin"
+  export LDFLAGS="-L/usr/local/opt/python@3.7/lib"
+  export PKG_CONFIG_PATH="/usr/local/opt/python@3.7/lib/pkgconfig"
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   eval $(/bin/brew shellenv)
@@ -16,6 +22,10 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
   alias ls='ls -a --color=auto'
   alias ll='ls -la --color=auto'
+  alias python2='/usr/bin/python'
+  alias python='/usr/bin/python3'
+  alias pip='~/.local/bin/pip3.7'
+  export PYTHONPATH="${PYTHONPATH}:~/.local/bin"
 
 fi
 
@@ -37,13 +47,9 @@ alias src='source ~/.zshrc'
 alias zshrc='vi ~/.zshrc'
 alias vimrc='vi ~/.vimrc'
 alias keymap='~/.dotfiles/keymap.sh'
-alias python2='/usr/bin/python'
-alias python='/usr/bin/python3'
-alias pip='~/.local/bin/pip3.7'
-export PYTHONPATH="${PYTHONPATH}:~/.local/bin"
 
 # Mistakes
-alias sl='ls -Ga'
+alias sl='ls'
 alias iv='vi'
 
 # Workspaces
@@ -57,3 +63,4 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 export SDKMAN_DIR="/home/eric/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+export PATH="/usr/local/opt/python@3.7/bin:$PATH"
