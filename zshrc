@@ -30,7 +30,7 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 fi
 
 # Zsh
-PROMPT='%F{241}[%D{%H:%M:%S.%.}] %F{208}%n%f in %F{226}%~%f $ '
+PROMPT='%F{241}[%D{%H:%M:%S.%.}] %F{208}%n%f in %F{226}%~%f'$'\n''$ '
 ZSH_THEME="agnoster"
 
 # Ruby
