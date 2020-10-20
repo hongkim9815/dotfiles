@@ -31,7 +31,7 @@ install vimrc
 install zshrc
 install ideavimrc
 
-if [ ! -d ~/.zsh/zsh-autosuggestions ]; then
+if [ -d ~/.zsh/zsh-autosuggestions ]; then
   cd ~/.zsh/zsh-autosuggestions && git pull
 else
   if [ ! -d ~/.zsh ]; then
