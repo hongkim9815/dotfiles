@@ -40,6 +40,7 @@ eval "$(rbenv init -)"
 # Abbreviations
 alias gst='git status'
 alias gad='git add'
+alias gad.='git add .'
 alias gps='git push'
 alias gpl='git pull'
 alias gmo='gitmoji -c'
