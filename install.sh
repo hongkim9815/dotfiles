@@ -30,6 +30,7 @@ install gitconfig
 install vimrc
 install zshrc
 install ideavimrc
+install keymap.sh
 
 if [ -d ~/.zsh/zsh-autosuggestions ]; then
   cd ~/.zsh/zsh-autosuggestions && git pull
