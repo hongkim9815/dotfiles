@@ -32,6 +32,7 @@ fi
 # Zsh
 PROMPT='%F{241}[%D{%H:%M:%S.%.}] %F{208}%n%f in %F{226}%~%f'$'\n''$ '
 ZSH_THEME="agnoster"
+setopt interactivecomments
 
 # Ruby
 PATH="$HOME/.rbenv/bin:$PATH"
@@ -65,3 +66,4 @@ export SDKMAN_DIR="/home/eric/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
+
