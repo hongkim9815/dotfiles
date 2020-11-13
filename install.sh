@@ -15,11 +15,21 @@ install () {
   ln -s $NEW $OLD
 }
 
-sudo apt-get install vim
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install vim
+    brew install git
+
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    sudo apt-get install vim
+    sudo apt-get install git
+
+fi
 
 install gitignore
 install gitconfig
 install vimrc
+install zshrc
+install ideavimrc
 
 if [ ! -f ~/.vim/autoload/plug.vim ]; then
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \

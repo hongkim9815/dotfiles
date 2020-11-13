@@ -6,5 +6,5 @@
 [include]
 	path = ~/.gitconfig.local
 [user]
-	email = hongkim9815@gmail.com
-	name = Kihong Kim
+	email = eric@dunamu.com
+	name = eric
