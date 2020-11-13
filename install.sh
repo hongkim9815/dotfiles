@@ -15,7 +15,17 @@ install () {
   ln -s $NEW $OLD
 }
 
-sudo apt-get install vim
+if [[ `uname` == "Darwin" ]]; then
+    brew install vim
+    brew install git
+    brew install gitmoji
+
+elif command apt > /dev/null; then
+    sudo apt-get install vim
+    sudo apt-get install git
+    sudo apt-get install gitmoji
+
+fi
 
 install gitignore
 install gitconfig
