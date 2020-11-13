@@ -59,7 +59,10 @@ alias keymap='~/.keymap.sh'
 alias sl='ls'
 alias iv='vi'
 
-# Workspaces
+# Private Workspaces
+PRIVATE_VARIABLE_01="PRIVATE_VARIABLE_01"
+PRIVATE_VARIABLE_02="PRIVATE_VARIABLE_02"
+
 if [ -d ~/.dotfiles_private_setting ]; then
   source ~/.dotfiles_private_setting/*.zshrc
 fi
@@ -82,6 +85,17 @@ export SDKMAN_DIR="/home/eric/.sdkman"
 
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
 
-source <(kubectl completion zsh)
-complete -F __start_kubectl kube
+function cd {
+  PREVIOUS_PATH=$(pwd)
+  builtin cd "$@"
+  if [[ $(pwd) != $PREVIOUS_PATH ]]; then
+    ls
+    if [[ $PREVIOUS_PATH != "$PRIVATE_VARIABLE_01"* && $(pwd) == "$PRIVATE_VARIABLE_01"* ]];
+    then
+      source <(kubectl completion zsh)
+      complete -F __start_kubectl $PRIVATE_VARIABLE_02
+    fi
+  fi
+}
+
 
