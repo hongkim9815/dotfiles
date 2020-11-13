@@ -16,8 +16,7 @@ install () {
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    brew install vim
-    brew install git
+    brew install vim git zsh
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     sudo apt-get update

@@ -27,12 +27,17 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   alias pip='~/.local/bin/pip3.7'
   export PYTHONPATH="${PYTHONPATH}:~/.local/bin"
 
+  # https://direnv.net/
+  which direnv > /dev/null && eval "$(direnv hook zsh)"
+
 fi
 
 # Zsh
+autoload -Uz compinit
+compinit
+setopt interactivecomments
 PROMPT='%F{241}[%D{%H:%M:%S.%.}] %F{208}%n%f in %F{226}%~%f'$'\n''$ '
 ZSH_THEME="agnoster"
-setopt interactivecomments
 
 # Ruby
 PATH="$HOME/.rbenv/bin:$PATH"
@@ -48,7 +53,7 @@ alias gmo='gitmoji -c'
 alias src='source ~/.zshrc'
 alias zshrc='vi ~/.zshrc'
 alias vimrc='vi ~/.vimrc'
-alias keymap='~/.dotfiles/keymap.sh'
+alias keymap='~/.keymap.sh'
 
 # Mistakes
 alias sl='ls'
@@ -56,8 +61,18 @@ alias iv='vi'
 
 # Workspaces
 if [ -d ~/.dotfiles_private_setting ]; then
-  source ~/.dotfiles_private_setting/*.zshrc.sh
+  source ~/.dotfiles_private_setting/*.zshrc
 fi
+
+dotfiles () {
+  if [[ $1 == "" ]];
+  then echo "Type command";
+  else
+    pushd ~/.dotfiles > /dev/null; eval $1;
+    if [ -d ~/.dotfiles_private_setting ]; then pushd ~/.dotfiles_private_setting > /dev/null; eval $1; fi;
+    popd > /dev/null; popd > /dev/null;
+  fi
+}
 
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
@@ -66,4 +81,7 @@ export SDKMAN_DIR="/home/eric/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
+
+source <(kubectl completion zsh)
+complete -F __start_kubectl kube
 
