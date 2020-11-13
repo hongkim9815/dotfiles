@@ -36,3 +36,5 @@ if [ ! -f ~/.vim/autoload/plug.vim ]; then
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
+git clone git@github.com:hongkim9815/dotfiles_private_setting -- ~/.dotfiles_private_setting
+
