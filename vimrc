@@ -66,6 +66,10 @@ endfunction
 
 nnoremap <F4> :call ToggleSyntastic()<CR>
 
+" Extension matching to FileType
+
+autocmd BufEnter *.zshrc :setlocal filetype=zsh
+
 " autoformat for google coding style
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
