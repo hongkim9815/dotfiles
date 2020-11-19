@@ -32,21 +32,28 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
 fi
 
+
 # Zsh
-autoload -Uz compinit
-compinit
 setopt interactivecomments
+autoload -Uz compinit && compinit
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Zsh Theme
 PROMPT='%F{241}[%D{%H:%M:%S.%.}] %F{208}%n%f in %F{226}%~%f'$'\n''$ '
 ZSH_THEME="agnoster"
 
-# Ruby
-PATH="$HOME/.rbenv/bin:$PATH"
+
+# Programs
+export PATH="/usr/local/opt/python@3.7/bin:$PATH"
+export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+
+export SDKMAN_DIR="/home/eric/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
 
 # Abbreviations
 alias gst='git status'
-alias gad='git add'
-alias gad.='git add .'
 alias gps='git push'
 alias gpl='git pull'
 alias gmo='gitmoji -c'
@@ -59,32 +66,39 @@ alias keymap='~/.keymap.sh'
 alias sl='ls'
 alias iv='vi'
 
+# Easy Method
+function gad { git add $@; gst }
+function gad. { git add .; gst }
+function pushd { builtin pushd $@; ls }
+function popd { builtin popd $@; ls }
+
+
 # Private Workspaces
 PRIVATE_VARIABLE_01="PRIVATE_VARIABLE_01"
 PRIVATE_VARIABLE_02="PRIVATE_VARIABLE_02"
 
-if [ -d ~/.dotfiles_private_setting ]; then
-  source ~/.dotfiles_private_setting/*.zshrc
-fi
+[[ -d "$HOME/.dotfiles_private_setting" ]] && source $HOME/.dotfiles_private_setting/*.zshrc
 
-dotfiles () {
+function dot () {
   if [[ $1 == "" ]];
   then echo "Type command";
   else
-    pushd ~/.dotfiles > /dev/null; eval $1;
-    if [ -d ~/.dotfiles_private_setting ]; then pushd ~/.dotfiles_private_setting > /dev/null; eval $1; fi;
-    popd > /dev/null; popd > /dev/null;
+    builtin pushd ~/.dotfiles > /dev/null; eval $1;
+    builtin popd > /dev/null;
   fi
 }
 
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+function dps () {
+  if [[ $1 == "" ]];
+  then echo "Type command";
+  else
+    builtin pushd ~/.dotfiles_private_setting > /dev/null; eval $1;
+    builtin popd > /dev/null;
+  fi
+}
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/eric/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-export PATH="/usr/local/opt/python@3.7/bin:$PATH"
-
+# alias functions
 function cd {
   PREVIOUS_PATH=$(pwd)
   builtin cd "$@"
@@ -97,5 +111,4 @@ function cd {
     fi
   fi
 }
-
 
