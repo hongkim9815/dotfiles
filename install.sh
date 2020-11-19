@@ -53,3 +53,5 @@ if [ "$1" == "private" ]; then
   fi
 fi
 
+source $HOME/.zshrc
+
