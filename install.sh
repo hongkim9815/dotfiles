@@ -17,6 +17,7 @@ install () {
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     brew install vim git zsh
+    brew update vim git zsh
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     sudo apt-get update
@@ -30,6 +31,7 @@ install vimrc
 install zshrc
 install ideavimrc
 install keymap.sh
+install theme.zshrc
 
 if [ -d ~/.zsh/zsh-autosuggestions ]; then
   cd ~/.zsh/zsh-autosuggestions && git pull
