@@ -27,20 +27,22 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   alias pip='~/.local/bin/pip3.7'
   export PYTHONPATH="${PYTHONPATH}:~/.local/bin"
 
-  # https://direnv.net/
-  which direnv > /dev/null && eval "$(direnv hook zsh)"
-
 fi
 
 
 # Zsh
+which direnv > /dev/null && eval "$(direnv hook zsh)"
 setopt interactivecomments
 autoload -Uz compinit && compinit
+autoload -Uz bashcompinit && bashcompinit
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+
 # Zsh Theme
-PROMPT='%F{241}[%D{%H:%M:%S.%.}] %F{208}%n%f in %F{226}%~%f'$'\n''$ '
-ZSH_THEME="agnoster"
+plugins=(git)
+export ZSH="/Users/eric/.oh-my-zsh"
+source $ZSH/oh-my-zsh.sh
+source $HOME/.theme.zshrc
 
 
 # Programs
@@ -66,11 +68,12 @@ alias keymap='~/.keymap.sh'
 alias sl='ls'
 alias iv='vi'
 
-# Easy Method
-function gad { git add $@; gst }
-function gad. { git add .; gst }
-function pushd { builtin pushd $@; ls }
-function popd { builtin popd $@; ls }
+
+# Many Methods
+function gad { git add $@; gst; }
+function gad. { git add .; gst; }
+function pushd { builtin pushd $@; ls; }
+function popd { builtin popd $@; ls; }
 
 
 # Private Workspaces
