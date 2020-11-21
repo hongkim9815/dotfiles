@@ -13,8 +13,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PKG_CONFIG_PATH="/usr/local/opt/python@3.7/lib/pkgconfig"
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  eval $(/bin/brew shellenv)
-  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+  [[ -s "/bin/brew" ]] && eval $(/bin/brew shellenv)
+  [[ -d "/bin/linuxbrew" ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
   alias fn='echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode'
 
   alias kt='xmodmap -pke | grep 66'
@@ -40,7 +40,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Zsh Theme
 plugins=(git)
-export ZSH="/Users/eric/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
 source $HOME/.theme.zshrc
 
@@ -48,7 +48,7 @@ source $HOME/.theme.zshrc
 # Programs
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+(( $+commands[rbenv] )) && eval "$(rbenv init -)"
 
 export SDKMAN_DIR="/home/eric/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

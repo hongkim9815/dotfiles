@@ -1,4 +1,5 @@
 #!/bin/bash
+
 DIRNAME="$(dirname "$0")"
 DIR="$(cd "$DIRNAME" && pwd)"
 
@@ -16,14 +17,20 @@ install () {
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    brew install vim git zsh
-    brew update vim git zsh
+    brew install vim git zsh curl gnu-which
+    brew update vim git zsh curl gnu-which
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     sudo apt-get update
-    sudo apt install -y vim git zsh
+    sudo apt install -y vim git zsh curl
 
 fi
+
+# oh-my-zsh
+[[ -d ~/.oh-my-zsh ]] || sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+[[ -f ~/.vim/autoload/plug.vim ]] || curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+[[ -d ~/.zsh/zsh-autosuggestions ]] || git clone git@github.com:zsh-users/zsh-autosuggestions -- ~/.zsh/zsh-autosuggestions
+[[ "$1" == "private" ]] && [[ ! -d ~/.dotfiles_private_setting ]] && git clone git@github.com:hongkim9815/dotfiles_private_setting -- ~/.dotfiles_private_setting
 
 install gitignore
 install gitconfig
@@ -33,27 +40,7 @@ install ideavimrc
 install keymap.sh
 install theme.zshrc
 
-if [ -d ~/.zsh/zsh-autosuggestions ]; then
-  cd ~/.zsh/zsh-autosuggestions && git pull
-else
-  if [ ! -d ~/.zsh ]; then
-    mkdir ~/.zsh
-  fi
-  git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-fi
-
-if [ ! -f ~/.vim/autoload/plug.vim ]; then
-  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-fi
-
-if [ "$1" == "private" ]; then
-  if [ -d ~/.dotfiles_private_setting ]; then
-    cd ~/.dotfiles_private_setting && git pull
-  else
-    git clone git@github.com:hongkim9815/dotfiles_private_setting -- ~/.dotfiles_private_setting
-  fi
-fi
-
-source $HOME/.zshrc
+vim +PlugInstall +qall > /dev/null
+chsh $USER -s $(which zsh)
+exec zsh -l
 
