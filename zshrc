@@ -8,6 +8,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   alias python2='/usr/bin/python'
   alias python='python3.7'
   alias pip='pip3'
+  export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
   export PYTHONPATH="${PYTHONPATH}:~/usr/local/opt/python@3.7/bin"
   export LDFLAGS="-L/usr/local/opt/python@3.7/lib"
   export PKG_CONFIG_PATH="/usr/local/opt/python@3.7/lib/pkgconfig"
@@ -67,6 +68,7 @@ alias keymap='~/.keymap.sh'
 # Mistakes
 alias sl='ls'
 alias iv='vi'
+alias cd..='cd ..'
 
 
 # Many Methods
