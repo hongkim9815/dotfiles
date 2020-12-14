@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 
+
+# Zsh
+which direnv > /dev/null && eval "$(direnv hook zsh)"
+setopt interactivecomments
+autoload -Uz compinit && compinit
+autoload -Uz bashcompinit && bashcompinit
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+
+# Zsh Theme
+plugins=(git)
+export ZSH="$HOME/.oh-my-zsh"
+source $ZSH/oh-my-zsh.sh
+source $HOME/.theme.zshrc
+
+
+# OS Dependency
 if [[ "$OSTYPE" == "darwin"* ]]; then
   eval $(/usr/local/bin/brew shellenv)
 
@@ -29,21 +46,6 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   export PYTHONPATH="${PYTHONPATH}:~/.local/bin"
 
 fi
-
-
-# Zsh
-which direnv > /dev/null && eval "$(direnv hook zsh)"
-setopt interactivecomments
-autoload -Uz compinit && compinit
-autoload -Uz bashcompinit && bashcompinit
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-
-# Zsh Theme
-plugins=(git)
-export ZSH="$HOME/.oh-my-zsh"
-source $ZSH/oh-my-zsh.sh
-source $HOME/.theme.zshrc
 
 
 # Programs
