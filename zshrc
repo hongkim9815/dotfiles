@@ -4,6 +4,8 @@
 # Zsh
 which direnv > /dev/null && eval "$(direnv hook zsh)"
 setopt interactivecomments
+. $HOME/.asdf/asdf.sh
+fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit && compinit
 autoload -Uz bashcompinit && bashcompinit
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh

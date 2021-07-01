@@ -36,6 +36,8 @@ prompt_git() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git rev-parse --short HEAD 2> /dev/null)"
   if [[ "${ref/refs\/heads\/}" = 'master' ]]; then
     prompt_echo 203 000 "\ue0a0 ${ref/refs\/heads\/}"
+  elif [[ "${ref/refs\/heads\/}" = 'main' ]]; then
+    prompt_echo 203 000 "\ue0a0 ${ref/refs\/heads\/}"
   else
     prompt_echo 155 000 "\ue0a0 ${ref/refs\/heads\/}"
   fi
