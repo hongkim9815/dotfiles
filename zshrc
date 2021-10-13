@@ -34,7 +34,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   [[ -s "/bin/brew" ]] && eval $(/bin/brew shellenv)
-  [[ -d "/bin/linuxbrew" ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+  [[ -d "/home/linuxbrew" ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
   alias fn='echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode'
 
   alias kt='xmodmap -pke | grep 66'
