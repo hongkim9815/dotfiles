@@ -17,13 +17,20 @@ install () {
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    brew install vim git zsh curl gnu-which
+    brew install vim git zsh curl gnu-which asdf
     brew update vim git zsh curl gnu-which
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     sudo apt-get update
     sudo apt install -y vim git zsh curl
 
+    if [[ -d ~/.linuxbrew ]]; then
+        git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew
+        mkdir ~/.linuxbrew/bin
+        ln -s ~/.linuxbrew/Homebrew/bin/brew ~/.linuxbrew/bin
+    fi
+
+    brew install asdf
 fi
 
 # oh-my-zsh

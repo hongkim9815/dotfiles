@@ -4,7 +4,6 @@
 # Zsh
 which direnv > /dev/null && eval "$(direnv hook zsh)"
 setopt interactivecomments
-. $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit && compinit
 autoload -Uz bashcompinit && bashcompinit
@@ -21,6 +20,7 @@ source $HOME/.theme.zshrc
 # OS Dependency
 if [[ "$OSTYPE" == "darwin"* ]]; then
   eval $(/usr/local/bin/brew shellenv)
+  . $HOME/.asdf/asdf.sh
 
   alias ls='ls -Ga'
   alias ll='ls -lGa'
@@ -33,13 +33,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PKG_CONFIG_PATH="/usr/local/opt/python@3.7/lib/pkgconfig"
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  [[ -s "/bin/brew" ]] && eval $(/bin/brew shellenv)
-  [[ -d "/home/linuxbrew" ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-  alias fn='echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode'
+  eval $(~/.linuxbrew/bin/brew shellenv)
+  . $HOME/.linuxbrew/opt/asdf/libexec/asdf.sh
 
+  alias fn='echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode'
   alias kt='xmodmap -pke | grep 66'
   alias ks='~/.keymap.sh'
-
   alias ls='ls -a --color=auto'
   alias ll='ls -la --color=auto'
   alias python2='/usr/bin/python'
@@ -60,6 +59,7 @@ export SDKMAN_DIR="/home/eric/.sdkman"
 
 
 # Abbreviations
+alias cl='clear'
 alias gst='git status'
 alias gps='git push'
 alias gpl='git pull'
