@@ -62,6 +62,7 @@ export SDKMAN_DIR="/home/eric/.sdkman"
 alias cl='clear'
 alias gst='git status'
 alias gps='git push'
+alias gpso='git push --set-upstream origin ${$(git symbolic-ref HEAD 2> /dev/null)/refs\/heads\/}'
 alias gpl='git pull'
 alias gmo='gitmoji -c'
 alias src='source ~/.zshrc'

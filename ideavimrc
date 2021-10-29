@@ -1,9 +1,7 @@
 set multiple-cursors
 
 set display+=uhex
-if has('extra_search')
-  set hlsearch
-endif
+set hlsearch
 
 nnoremap <tab> <C-W>w
 nnoremap <S-tab> <C-W>W
