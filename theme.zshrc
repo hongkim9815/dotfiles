@@ -29,7 +29,20 @@ prompt_status() {
 
 prompt_context() { prompt_echo 209 000 "%n" }
 
-prompt_dir() { prompt_echo 075 000 '%~' }
+prompt_dir() {
+  if [[ "$(pwd)" = *${PRIVATE_VARIABLE_03}* ]]; then
+    dir_bg=196
+    dir_fg=231
+  elif [[ "$(pwd)" = *${PRIVATE_VARIABLE_04}* ]]; then
+    dir_bg=21
+    dir_fg=231
+  else
+    dir_bg=075
+    dir_fg=000
+  fi
+
+  prompt_echo ${dir_bg} ${dir_fg} '%~'
+}
 
 prompt_git() {
   [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]] || return
