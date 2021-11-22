@@ -1,10 +1,6 @@
 set nocompatible
 filetype off
 
-" Manual vim-plug installation
-" curl -fLo ~/.vim/autoload/plug.vim \
-"      --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
 call plug#begin()
 
 " UI
@@ -98,6 +94,7 @@ let g:NERDTreeDirArrowExpandable = '+'
 let g:NERDTreeDirArrowCollapsible = '-'
 autocmd VimEnter * NERDTree | wincmd p
 autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+let NERDTreeShowHidden=1
 
 " Close all open buffers on entering a window if the only
 " buffer that's left is the NERDTree buffer
@@ -134,7 +131,7 @@ set mouse=a
 " Briefly jump to the matching one when a bracket is inserted
 set showmatch
 set cul
-set colorcolumn=100
+set colorcolumn=120
 
 " Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=darkgreen
@@ -162,6 +159,7 @@ autocmd InsertLeave * set nopaste
 
 " Move between splitted windows
 nnoremap <tab> <C-W>w
+nnoremap <S-tab> <C-W>W
 
 " Remove highlights
 nnoremap <C-h> :nohlsearch<CR>
@@ -186,6 +184,8 @@ nnoremap <C-u> <C-r>
 
 " Ignore mistakes
 command Wq :wq
+command Qw :wq
+command QW :wq
 command WQ :wq
 command W :w
 command Wa :wa
@@ -213,6 +213,8 @@ augroup autocompile
   autocmd FileType python imap <F5> <Esc>:w<CR>:!python %<CR>
   autocmd FileType python map <F6> :w<CR>:!python3 %<CR>
   autocmd FileType python imap <F6> <Esc>:w<CR>:!python3 %<CR>
+  autocmd FileType ruby map <F5> :w<CR>:!ruby %<CR>
+  autocmd FileType ruby imap <F5> <Esc>:w<CR>:!ruby %<CR>
 augroup END
 
 " keep cursor line and display it to the center

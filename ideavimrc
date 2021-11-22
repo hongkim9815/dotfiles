@@ -1,0 +1,39 @@
+set multiple-cursors
+
+set display+=uhex
+if has('extra_search')
+  set hlsearch
+endif
+
+nnoremap <tab> <C-W>w
+nnoremap <S-tab> <C-W>W
+
+autocmd InsertLeave * set nopaste
+nnoremap <C-h> :nohlsearch<CR>
+
+" Display center
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
+nnoremap <PageUp> <C-u>zz
+nnoremap <PageDown> <C-d>zz
+inoremap <PageUp> <ESC><C-u>zzi
+inoremap <PageDown> <ESC><C-d>zzi
+autocmd BufWinEnter * exe "normal zz"
+
+" Utils
+nnoremap <C-a> ggvG
+vnoremap <C-a> vggvG
+nnoremap <C-u> <C-r>
+
+" Ignore mistakes
+command Wq :wq
+command WQ :wq
+command W :w
+command Wa :wa
+command WA :wa
+command Q :q
+
