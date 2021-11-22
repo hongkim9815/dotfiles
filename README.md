@@ -1,5 +1,5 @@
 # dotfiles
-This repository consists of dotfiles for Linux, especially for Ubuntu.
+This repository consists of dotfiles for MacOS, Linux, especially for Ubuntu.
 
 ## Usage
 ```sh
