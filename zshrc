@@ -86,6 +86,8 @@ function popd { builtin popd $@; ls; }
 # Private Workspaces
 PRIVATE_VARIABLE_01="PRIVATE_VARIABLE_01"
 PRIVATE_VARIABLE_02="PRIVATE_VARIABLE_02"
+PRIVATE_VARIABLE_03="PRIVATE_VARIABLE_03"
+PRIVATE_VARIABLE_04="PRIVATE_VARIABLE_04"
 
 [[ -d "$HOME/.dotfiles_private_setting" ]] && source $HOME/.dotfiles_private_setting/*.zshrc
 
