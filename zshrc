@@ -20,7 +20,8 @@ source $HOME/.theme.zshrc
 # OS Dependency
 if [[ "$OSTYPE" == "darwin"* ]]; then
   eval $(/usr/local/bin/brew shellenv)
-  . $HOME/.asdf/asdf.sh
+  [[ -s "/usr/local/opt/asdf/libexec/asdf.sh" ]] && . /usr/local/opt/asdf/libexec/asdf.sh
+  [[ -s "$HOME/.asdf/asdf.sh" ]] && . $HOME/.asdf/asdf.sh
 
   alias ls='ls -Ga'
   alias ll='ls -lGa'
@@ -34,7 +35,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   eval $(~/.linuxbrew/bin/brew shellenv)
-  . $HOME/.linuxbrew/opt/asdf/libexec/asdf.sh
+  [[ -s "$HOME/.linuxbrew/opt/asdf/libexec/asdf.sh" ]] && . $HOME/.linuxbrew/opt/asdf/libexec/asdf.sh
 
   alias fn='echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode'
   alias kt='xmodmap -pke | grep 66'
