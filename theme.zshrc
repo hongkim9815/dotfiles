@@ -30,14 +30,14 @@ prompt_status() {
 prompt_context() { prompt_echo 209 000 "%n" }
 
 prompt_dir() {
+  dir_bg=075
+
   if [[ "$(pwd)" = *${PRIVATE_VARIABLE_03}* ]]; then
-    dir_bg=196
-    dir_fg=231
+    dir_bg=027
+    dir_fg=255
   elif [[ "$(pwd)" = *${PRIVATE_VARIABLE_04}* ]]; then
-    dir_bg=21
-    dir_fg=231
+    dir_fg=021
   else
-    dir_bg=075
     dir_fg=000
   fi
 
