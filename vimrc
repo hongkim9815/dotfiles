@@ -112,8 +112,8 @@ function! s:CloseIfOnlyNerdTreeLeft()
 endfunction
 
 " gitgutter
-autocmd BufWritePost * GitGutter
-let g:gitgutter_max_signs= 1000
+autocmd BufReadPost,BufWritePost * GitGutter
+let g:gitgutter_max_signs= 3000
 autocmd ColorScheme * highlight GitGutterDelete ctermfg=red
 
 " vimrc fundamental setting

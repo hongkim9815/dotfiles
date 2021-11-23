@@ -8,7 +8,7 @@
 	path = ~/.gitconfig.local
 [user]
 	email = hongkim9815@gmail.com
-	name = Kihong Kim
+  name = eric
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
