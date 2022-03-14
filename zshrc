@@ -37,7 +37,8 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   [[ -d "/home/linuxbrew/.linuxbrew" ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
   [[ -d "$HOME/.linuxbrew" ]] && eval $($HOME/.linuxbrew/bin/brew shellenv)
 
-  [[ -s "$HOME/.linuxbrew/opt/asdf/libexec/asdf.sh" ]] && . $HOME/.linuxbrew/opt/asdf/libexec/asdf.sh
+  [[ -d "/home/linuxbrew/.linuxbrew" ]] && . /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh
+  [[ -d "$HOME/.linuxbrew" ]] && . $HOME/.linuxbrew/opt/asdf/libexec/asdf.sh
 
   alias fn='echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode'
   alias kt='xmodmap -pke | grep 66'
