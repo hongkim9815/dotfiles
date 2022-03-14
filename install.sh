@@ -17,8 +17,8 @@ install () {
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  brew install vim git zsh curl gnu-which asdf
-  brew update vim git zsh curl gnu-which
+  brew install vim git zsh curl gnu-which asdf gitmoji
+  brew update vim git zsh curl gnu-which asdf gitmoji
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo apt-get update
@@ -27,8 +27,8 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
 
   if [[ -d "$HOME/.linuxbrew" ]] || [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-    brew install asdf
-    brew install gitmoji
+    brew install asdf gitmoji
+    brew update asdf gitmoji
 
   fi
 fi
