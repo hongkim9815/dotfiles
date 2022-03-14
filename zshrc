@@ -34,7 +34,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PKG_CONFIG_PATH="/usr/local/opt/python@3.7/lib/pkgconfig"
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  eval $(~/.linuxbrew/bin/brew shellenv)
+  [[ -d "/home/linuxbrew/.linuxbrew" ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+  [[ -d "$HOME/.linuxbrew" ]] && eval $($HOME/.linuxbrew/bin/brew shellenv)
+
   [[ -s "$HOME/.linuxbrew/opt/asdf/libexec/asdf.sh" ]] && . $HOME/.linuxbrew/opt/asdf/libexec/asdf.sh
 
   alias fn='echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode'
