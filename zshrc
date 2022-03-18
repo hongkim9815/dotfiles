@@ -2,7 +2,6 @@
 
 
 # Zsh
-which direnv > /dev/null && eval "$(direnv hook zsh)"
 setopt interactivecomments
 fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit && compinit
@@ -61,6 +60,8 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export SDKMAN_DIR="/home/eric/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+which direnv > /dev/null && eval "$(direnv hook zsh)"
+
 
 # Abbreviations
 alias cl='clear'
@@ -73,6 +74,7 @@ alias src='source ~/.zshrc'
 alias zshrc='vi ~/.zshrc'
 alias vimrc='vi ~/.vimrc'
 alias keymap='~/.keymap.sh'
+
 
 # Mistakes
 alias sl='ls'
@@ -94,6 +96,9 @@ PRIVATE_VARIABLE_03="PRIVATE_VARIABLE_03"
 PRIVATE_VARIABLE_04="PRIVATE_VARIABLE_04"
 
 [[ -d "$HOME/.dotfiles_private_setting" ]] && source $HOME/.dotfiles_private_setting/*.zshrc
+
+
+# Functions
 
 function dot () {
   if [[ $1 == "" ]];
