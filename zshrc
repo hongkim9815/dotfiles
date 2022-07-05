@@ -47,13 +47,18 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   alias python2='/usr/bin/python'
   alias python='/usr/bin/python3'
   alias pip='~/.local/bin/pip3.7'
+  alias mouselag="sudo sh -c 'echo N> /sys/module/drm_kms_helper/parameters/poll; echo \"options drm_kms_helper poll=N\">/etc/modprobe.d/local.conf'"
+
   export PYTHONPATH="${PYTHONPATH}:~/.local/bin"
+  export GOROOT='/usr/local/go'
+  export GOPATH="$HOME/go"
 
 fi
 
 
 # Programs
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
+export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 (( $+commands[rbenv] )) && eval "$(rbenv init -)"
 
@@ -65,6 +70,7 @@ which direnv > /dev/null && eval "$(direnv hook zsh)"
 
 # Abbreviations
 alias cl='clear'
+alias g-='git checkout -'
 alias gst='git status'
 alias gps='git push'
 alias gpso='git push --set-upstream origin ${$(git symbolic-ref HEAD 2> /dev/null)/refs\/heads\/}'
