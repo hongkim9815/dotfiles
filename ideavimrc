@@ -2,6 +2,8 @@ set multiple-cursors
 
 set display+=uhex
 set hlsearch
+set visualbell
+set noerrorbells
 
 nnoremap <tab> <C-W>w
 nnoremap <S-tab> <C-W>W
