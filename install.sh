@@ -3,7 +3,7 @@
 DIRNAME="$(dirname "$0")"
 DIR="$(cd "$DIRNAME" && pwd)"
 
-install () {
+setup () {
   OLD="$HOME/.$1"
   NEW="$DIR/$1"
   if [ -f $OLD ]; then
@@ -41,13 +41,14 @@ fi
 [[ "$1" == "private" ]] && [[ ! -d ~/.dotfiles_private_setting ]] && git clone git@github.com:hongkim9815/dotfiles_private_setting -- ~/.dotfiles_private_setting
 
 
-install gitignore
-install gitconfig
-install vimrc
-install zshrc
-install ideavimrc
-install keymap.sh
-install theme.zshrc
+setup gitignore
+setup gitconfig
+setup vimrc
+setup zshrc
+setup ideavimrc
+setup keymap.sh
+setup theme.zshrc
+[[ "$OSTYPE" == "linux-gnu"* ]] && setup xinitrc
 
 
 vim +PlugInstall +qall > /dev/null

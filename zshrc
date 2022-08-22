@@ -67,6 +67,7 @@ export SDKMAN_DIR="/home/eric/.sdkman"
 
 which direnv > /dev/null && eval "$(direnv hook zsh)"
 
+export GPG_TTY=$(tty)
 
 # Abbreviations
 alias cl='clear'
