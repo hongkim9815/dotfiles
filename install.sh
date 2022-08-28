@@ -2,10 +2,13 @@
 
 DIRNAME="$(dirname "$0")"
 DIR="$(cd "$DIRNAME" && pwd)"
+PRIVATE_DIR="$HOME/.dotfiles_private_setting"
 
 setup () {
   OLD="$HOME/.$1"
   NEW="$DIR/$1"
+  [[ -s "$PRIVATE_DIR/$1" ]] && NEW="$PRIVATE_DIR/$1"
+
   if [ -f $OLD ]; then
     if [ -L $OLD ]; then
       rm $OLD
@@ -20,11 +23,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install vim git zsh curl gnu-which asdf gitmoji
   brew update vim git zsh curl gnu-which asdf gitmoji
 
+  [[ ! -s "$HOME/Library/KeyBindings/DefaultKeyBinding.dict" ]] && mkdir -p "$HOME/Library/KeyBindings" && ln -s "$DIR/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
+
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo apt-get update
   sudo apt install -y vim git zsh curl
   (brew --version >> /dev/null 2>&1) || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
 
   if [[ -d "$HOME/.linuxbrew" ]] || [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
     brew install asdf gitmoji

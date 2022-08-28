@@ -18,10 +18,17 @@ source $HOME/.theme.zshrc
 
 # OS Dependency
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  eval $(/usr/local/bin/brew shellenv)
+  [[ -s "/usr/local/bin/brew" ]] && HOMEBREW_DIR="/usr/local"
+  [[ -d "/opt/homebrew" ]] && [[ -s "/opt/homebrew/bin/brew" ]] && HOMEBREW_DIR="/opt/homebrew"
   [[ -s "/usr/local/opt/asdf/libexec/asdf.sh" ]] && . /usr/local/opt/asdf/libexec/asdf.sh
+
+  eval $($HOMEBREW_DIR/bin/brew shellenv)
+  . "$HOMEBREW_DIR/opt/asdf/libexec/asdf.sh"
+
   [[ -s "$HOME/.asdf/asdf.sh" ]] && . $HOME/.asdf/asdf.sh
 
+  export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
+  export PATH="/opt/homebrew/opt/libxslt/bin:$PATH"
   alias ls='ls -Ga'
   alias ll='ls -lGa'
   alias python2='/usr/bin/python'
@@ -57,6 +64,7 @@ fi
 
 
 # Programs
+export GPG_TTY=$(tty)
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
 export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -66,8 +74,6 @@ export SDKMAN_DIR="/home/eric/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 which direnv > /dev/null && eval "$(direnv hook zsh)"
-
-export GPG_TTY=$(tty)
 
 # Abbreviations
 alias cl='clear'
