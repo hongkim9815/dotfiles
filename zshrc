@@ -20,20 +20,23 @@ source $HOME/.theme.zshrc
 if [[ "$OSTYPE" == "darwin"* ]]; then
   [[ -s "/usr/local/bin/brew" ]] && HOMEBREW_DIR="/usr/local"
   [[ -d "/opt/homebrew" ]] && [[ -s "/opt/homebrew/bin/brew" ]] && HOMEBREW_DIR="/opt/homebrew"
-  [[ -s "/usr/local/opt/asdf/libexec/asdf.sh" ]] && . /usr/local/opt/asdf/libexec/asdf.sh
 
   eval $($HOMEBREW_DIR/bin/brew shellenv)
-  . "$HOMEBREW_DIR/opt/asdf/libexec/asdf.sh"
 
+  [[ -s "/usr/local/opt/asdf/libexec/asdf.sh" ]] && . /usr/local/opt/asdf/libexec/asdf.sh
+  [[ -s "$HOMEBREW_DIR/opt/asdf/libexec/asdf.sh" ]] && . $HOMEBREW_DIR/opt/asdf/libexec/asdf.sh
   [[ -s "$HOME/.asdf/asdf.sh" ]] && . $HOME/.asdf/asdf.sh
 
-  export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
-  export PATH="/opt/homebrew/opt/libxslt/bin:$PATH"
+  export PATH="$HOMEBREW_DIR/opt/openssl@3/bin:$PATH"
+  export PATH="$HOMEBREW_DIR/opt/libxslt/bin:$PATH"
   alias ls='ls -Ga'
   alias ll='ls -lGa'
   alias python2='/usr/bin/python'
   alias python='python3.7'
   alias pip='pip3'
+  alias nsl='sudo pmset -c disablesleep 1'
+  alias ysl='sudo pmset -c disablesleep 0'
+  alias emul='./Library/Android/sdk/emulator/emulator -list-avds | xargs ./Library/Android/sdk/emulator/emulator -avd'
   export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
   export PYTHONPATH="${PYTHONPATH}:~/usr/local/opt/python@3.7/bin"
   export LDFLAGS="-L/usr/local/opt/python@3.7/lib"
@@ -113,7 +116,7 @@ PRIVATE_VARIABLE_04="PRIVATE_VARIABLE_04"
 
 # Functions
 
-function dot () {
+function dot {
   if [[ $1 == "" ]];
   then echo "Type command";
   else
@@ -122,7 +125,7 @@ function dot () {
   fi
 }
 
-function dps () {
+function dps {
   if [[ $1 == "" ]];
   then echo "Type command";
   else
@@ -140,8 +143,8 @@ function cd {
     ls
     if [[ $PREVIOUS_PATH != "$PRIVATE_VARIABLE_01"* && $(pwd) == "$PRIVATE_VARIABLE_01"* ]];
     then
-      source <(kubectl completion zsh)
-      complete -F __start_kubectl $PRIVATE_VARIABLE_02
+      # source <(kubectl completion zsh)
+      # complete -F __start_kubectl $PRIVATE_VARIABLE_02
     fi
   fi
 }

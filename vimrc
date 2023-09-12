@@ -176,6 +176,8 @@ nnoremap g* g*zz
 nnoremap g# g#zz
 nnoremap <PageUp> <C-u>zz
 nnoremap <PageDown> <C-d>zz
+vnoremap <PageUp> <C-u>zz
+vnoremap <PageDown> <C-d>zz
 inoremap <PageUp> <ESC><C-u>zz
 inoremap <PageDown> <ESC><C-d>zz
 autocmd BufWinEnter * exe "normal zz"

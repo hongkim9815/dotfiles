@@ -17,7 +17,7 @@ prompt_echo() {
 }
 
 prompt_time() {
-  prompt_echo 240 000 "%D{%H:%M:%S.%.}"
+  prompt_echo 244 000 "%D{%H:%M:%S.%.}"
 }
 
 prompt_status() {
@@ -46,13 +46,19 @@ prompt_dir() {
 
 prompt_git() {
   [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]] || return
-  ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git rev-parse --short HEAD 2> /dev/null)"
-  if [[ "${ref/refs\/heads\/}" = 'master' ]]; then
-    prompt_echo 203 000 "\ue0a0 ${ref/refs\/heads\/}"
-  elif [[ "${ref/refs\/heads\/}" = 'main' ]]; then
-    prompt_echo 203 000 "\ue0a0 ${ref/refs\/heads\/}"
+  branch=$(git symbolic-ref HEAD 2> /dev/null)
+  branch="${branch/refs\/heads\/}"
+  ref="$(git rev-parse --short HEAD 2> /dev/null)"
+
+  prompt_echo 221 000 "➦ ${ref}"
+  if [[ "${branch}" = "" ]]; then
+    prompt_echo 226 000 "\ue0a0 HEAD"
+  elif [[ "${branch}" = 'master' ]]; then
+    prompt_echo 203 000 "\ue0a0 ${branch}"
+  elif [[ "${branch}" = 'main' ]]; then
+    prompt_echo 203 000 "\ue0a0 ${branch}"
   else
-    prompt_echo 155 000 "\ue0a0 ${ref/refs\/heads\/}"
+    prompt_echo 155 000 "\ue0a0 ${branch}"
   fi
 }
 
@@ -62,7 +68,6 @@ prompt_end() {
   CURRENT_BG='NONE'
   CURRENT_FG='NONE'
 }
-
 
 build_prompt() {
   RETVAL=$?
