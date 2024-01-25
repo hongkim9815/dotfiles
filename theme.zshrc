@@ -78,7 +78,7 @@ build_prompt() {
   prompt_dir
   prompt_git
   prompt_end
-  echo -n "\n$ "
+  echo -n "\n "
 }
 
 PROMPT='$(build_prompt)'
