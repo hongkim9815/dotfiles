@@ -49,19 +49,8 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   [[ -d "/home/linuxbrew/.linuxbrew" ]] && . /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh
   [[ -d "$HOME/.linuxbrew" ]] && . $HOME/.linuxbrew/opt/asdf/libexec/asdf.sh
 
-  alias fn='echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode'
-  alias kt='xmodmap -pke | grep 66'
-  alias ks='~/.keymap.sh'
   alias ls='ls -a --color=auto'
   alias ll='ls -la --color=auto'
-  alias python2='/usr/bin/python'
-  alias python='/usr/bin/python3'
-  alias pip='~/.local/bin/pip3.7'
-  alias mouselag="sudo sh -c 'echo N> /sys/module/drm_kms_helper/parameters/poll; echo \"options drm_kms_helper poll=N\">/etc/modprobe.d/local.conf'"
-
-  export PYTHONPATH="${PYTHONPATH}:~/.local/bin"
-  export GOROOT='/usr/local/go'
-  export GOPATH="$HOME/go"
 
 fi
 
@@ -150,4 +139,7 @@ function cd {
     # fi
   fi
 }
+
+export DOTNET_ROOT=$HOME/.dotnet
+export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
 

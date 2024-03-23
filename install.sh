@@ -32,7 +32,7 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
   if [[ -d "$HOME/.linuxbrew" ]] || [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
     brew install asdf gitmoji
-    brew update asdf gitmoji
+    brew upgrade asdf gitmoji
 
   fi
 fi
