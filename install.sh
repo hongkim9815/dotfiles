@@ -27,7 +27,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo apt-get update
-  sudo apt install -y vim git zsh curl
+  sudo apt install -y vim git zsh curl gcc build-essential
   (brew --version >> /dev/null 2>&1) || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   if [[ -d "$HOME/.linuxbrew" ]] || [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
