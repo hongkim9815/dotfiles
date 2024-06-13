@@ -132,11 +132,6 @@ function cd {
   builtin cd "$@"
   if [[ $(pwd) != $PREVIOUS_PATH ]]; then
     ls
-    # if [[ $PREVIOUS_PATH != "$PRIVATE_VARIABLE_01"* && $(pwd) == "$PRIVATE_VARIABLE_01"* ]];
-    # then
-    #   source <(kubectl completion zsh)
-    #   complete -F __start_kubectl $PRIVATE_VARIABLE_02
-    # fi
   fi
 }
 

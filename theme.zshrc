@@ -65,6 +65,7 @@ prompt_git() {
 prompt_end() {
   [[ -n $CURRENT_BG ]] && echo -n " %{%K{$DEFAULT_BG}%F{$CURRENT_BG}%}\ue0b0 "
   echo -n "%{%K{$DEFAULT_BG}%F{$DEFAULT_FG}%}"
+  echo -n "\e[0m"
   CURRENT_BG='NONE'
   CURRENT_FG='NONE'
 }
