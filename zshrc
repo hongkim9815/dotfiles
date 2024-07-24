@@ -31,15 +31,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH="$HOMEBREW_DIR/opt/libxslt/bin:$PATH"
   alias ls='ls -Ga'
   alias ll='ls -lGa'
-  alias python2='/usr/bin/python'
-  alias python='python3.7'
-  alias pip='pip3'
+  alias python='python3'
   alias nsl='sudo pmset -c disablesleep 1'
   alias ysl='sudo pmset -c disablesleep 0'
   alias emul='./Library/Android/sdk/emulator/emulator -list-avds | xargs ./Library/Android/sdk/emulator/emulator -avd'
   export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
   export PYTHONPATH="${PYTHONPATH}:~/usr/local/opt/python@3.7/bin"
-  export LDFLAGS="-L/usr/local/opt/python@3.7/lib"
   export PKG_CONFIG_PATH="/usr/local/opt/python@3.7/lib/pkgconfig"
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then

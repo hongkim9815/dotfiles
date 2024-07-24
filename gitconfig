@@ -8,7 +8,7 @@
 	path = ~/.gitconfig.local
 [user]
 	email = hongkim9815@gmail.com
-  name = hongkim9815
+	name = hongkim9815
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -18,3 +18,5 @@
 	recurse = true
 [commit]
 	gpgsign = false
+[init]
+	defaultBranch = main
