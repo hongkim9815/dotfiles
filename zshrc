@@ -18,13 +18,11 @@ source $HOME/.theme.zshrc
 
 # OS Dependency
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  [[ -s "/usr/local/bin/brew" ]] && HOMEBREW_DIR="/usr/local"
-  [[ -d "/opt/homebrew" ]] && [[ -s "/opt/homebrew/bin/brew" ]] && HOMEBREW_DIR="/opt/homebrew"
-
-  eval $($HOMEBREW_DIR/bin/brew shellenv)
+  # [[ -s "/usr/local/bin/brew" ]] && eval $(/usr/local/bin/brew shellenv)
+  [[ -d "/opt/homebrew" ]] && [[ -s "/opt/homebrew/bin/brew" ]] && eval $(/opt/homebrew/bin/brew shellenv)
 
   [[ -s "/usr/local/opt/asdf/libexec/asdf.sh" ]] && . /usr/local/opt/asdf/libexec/asdf.sh
-  [[ -s "$HOMEBREW_DIR/opt/asdf/libexec/asdf.sh" ]] && . $HOMEBREW_DIR/opt/asdf/libexec/asdf.sh
+  [[ -s "/opt/homebrew/opt/asdf/libexec/asdf.sh" ]] && . /opt/homebrew/opt/asdf/libexec/asdf.sh
   [[ -s "$HOME/.asdf/asdf.sh" ]] && . $HOME/.asdf/asdf.sh
 
   export PATH="$HOMEBREW_DIR/opt/openssl@3/bin:$PATH"
@@ -32,12 +30,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   alias ls='ls -Ga'
   alias ll='ls -lGa'
   alias python='python3'
+  alias pip='pip3'
   alias nsl='sudo pmset -c disablesleep 1'
   alias ysl='sudo pmset -c disablesleep 0'
   alias emul='./Library/Android/sdk/emulator/emulator -list-avds | xargs ./Library/Android/sdk/emulator/emulator -avd'
-  export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-  export PYTHONPATH="${PYTHONPATH}:~/usr/local/opt/python@3.7/bin"
-  export PKG_CONFIG_PATH="/usr/local/opt/python@3.7/lib/pkgconfig"
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   [[ -d "/home/linuxbrew/.linuxbrew" ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
@@ -54,7 +50,6 @@ fi
 
 # Programs
 export GPG_TTY=$(tty)
-export PATH="/usr/local/opt/python@3.7/bin:$PATH"
 export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 (( $+commands[rbenv] )) && eval "$(rbenv init -)"
@@ -132,6 +127,5 @@ function cd {
   fi
 }
 
-export DOTNET_ROOT=$HOME/.dotnet
-export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools
+
 

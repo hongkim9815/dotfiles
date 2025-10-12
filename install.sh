@@ -23,7 +23,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install vim git zsh curl gnu-which asdf gitmoji
   brew update vim git zsh curl gnu-which asdf gitmoji
 
-  [[ ! -s "$HOME/Library/KeyBindings/DefaultKeyBinding.dict" ]] && mkdir -p "$HOME/Library/KeyBindings" && ln -s "$DIR/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
+  [[ -f "$HOME/Library/KeyBindings/DefaultKeyBinding.dict" ]] || mkdir -p "$HOME/Library/KeyBindings" && ln -s "$DIR/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo apt-get update
