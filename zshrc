@@ -29,11 +29,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH="$HOMEBREW_DIR/opt/libxslt/bin:$PATH"
   alias ls='ls -Ga'
   alias ll='ls -lGa'
-  alias python='python3'
-  alias pip='pip3'
-  alias nsl='sudo pmset -c disablesleep 1'
-  alias ysl='sudo pmset -c disablesleep 0'
-  alias emul='./Library/Android/sdk/emulator/emulator -list-avds | xargs ./Library/Android/sdk/emulator/emulator -avd'
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   [[ -d "/home/linuxbrew/.linuxbrew" ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
@@ -95,6 +90,16 @@ PRIVATE_VARIABLE_03="PRIVATE_VARIABLE_03"
 PRIVATE_VARIABLE_04="PRIVATE_VARIABLE_04"
 
 [[ -d "$HOME/.dotfiles_private_setting" ]] && source $HOME/.dotfiles_private_setting/*.zshrc
+
+
+# Programs
+#   Python
+alias python='python3'
+alias pip='pip3'
+#   Springboot
+alias gradlew='./gradlew'
+alias ktlint='./bin/ktlint'
+alias tt='./bin/test'
 
 
 # Functions
