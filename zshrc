@@ -30,6 +30,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   alias ls='ls -Ga'
   alias ll='ls -lGa'
 
+  alias python='python3'
+  export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/opt/homebrew/opt/mysql@8.0/lib/pkgconfig"
+  export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/opt/homebrew/opt/mysql-client@8.0/lib/pkgconfig"
+
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   [[ -d "/home/linuxbrew/.linuxbrew" ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
   [[ -d "$HOME/.linuxbrew" ]] && eval $($HOME/.linuxbrew/bin/brew shellenv)
@@ -49,9 +53,6 @@ export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 (( $+commands[rbenv] )) && eval "$(rbenv init -)"
 
-export SDKMAN_DIR="/home/eric/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
 which direnv > /dev/null && eval "$(direnv hook zsh)"
 
 # Abbreviations
@@ -68,12 +69,12 @@ alias src='source ~/.zshrc'
 alias zshrc='vi ~/.zshrc'
 alias vimrc='vi ~/.vimrc'
 alias keymap='~/.keymap.sh'
+alias c='claude'
 
 
 # Mistakes
 alias sl='ls'
 alias iv='vi'
-alias cd..='cd ..'
 
 
 # Many Methods

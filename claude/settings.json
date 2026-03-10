@@ -1,0 +1,98 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(ls*)",
+      "Bash(cat*)",
+      "Bash(echo*)",
+      "Bash(tree*)",
+      "Bash(pwd*)",
+      "Bash(find*)",
+      "Bash(xargs*)",
+      "Bash(grep*)",
+      "Bash(head*)",
+      "Bash(tail*)",
+      "Bash(wc*)",
+      "Bash(which*)",
+      "Bash(file*)",
+      "Bash(stat*)",
+      "Bash(sed*)",
+      "Bash(cd*)",
+      "Bash(awk*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git branch*)",
+      "Bash(git show*)",
+      "Bash(git checkout*)",
+      "Bash(git switch*)",
+      "Bash(git fetch*)",
+      "Bash(git pull*)",
+      "Bash(git stash*)",
+      "Bash(make*)",
+      "Bash(./mvnw*)",
+      "Bash(mvn*)",
+      "Bash(./gradlew*)",
+      "Bash(gradle*)",
+      "Bash(cargo*)",
+      "Bash(go build*)",
+      "Bash(go test*)",
+      "Bash(gh pr view*)",
+      "Bash(gh pr list*)",
+      "Bash(gh pr status*)",
+      "Bash(gh pr checks*)",
+      "Bash(gh pr diff*)",
+      "Bash(gh issue list*)",
+      "Bash(gh issue view*)",
+      "Bash(gh repo view*)",
+      "Bash(gh run list*)",
+      "Bash(gh run view*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Read(**)",
+      "Write(**/.claude/tmp/**)",
+      "Edit(**/.claude/tmp/**)",
+      "Bash(mkdir*/.claude/tmp*)",
+      "Bash(rm*/.claude/tmp/*)",
+      "Bash(touch*/.claude/tmp/*)",
+      "Bash(cp*/.claude/tmp/*)",
+      "Bash(mv*/.claude/tmp/*)"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.envrc)",
+      "Edit(**/.env)",
+      "Edit(**/.envrc)",
+      "Write(**/.env)",
+      "Write(**/.envrc)",
+      "Bash(cat*/.env*)",
+      "Bash(env*)"
+    ]
+  },
+  "model": "opus",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/notification-hook.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh",
+    "padding": 0
+  },
+  "enabledPlugins": {},
+  "extraKnownMarketplaces": {},
+  "skipWebFetchPreflight": true,
+  "effortLevel": "medium",
+  "autoUpdaterStatus": "disabled"
+}

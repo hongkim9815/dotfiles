@@ -1,4 +1,8 @@
 
+### Claude Code ###
+.claude/tmp/
+.claude/settings.local.json
+
 # Created by https://www.gitignore.io/
 
 ### Linux ###

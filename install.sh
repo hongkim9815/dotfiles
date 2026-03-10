@@ -55,6 +55,13 @@ setup theme.zshrc
 [[ "$OSTYPE" == "linux-gnu"* ]] && setup xinitrc
 
 
+# Claude settings
+[[ -x "$DIR/install_claude.sh" ]] && "$DIR/install_claude.sh"
+
+# Private Claude settings
+PRIVATE_CLAUDE_DIR="$HOME/.dotfiles_private_settings"
+[[ -x "${PRIVATE_CLAUDE_DIR}/install.sh" ]] && "${PRIVATE_CLAUDE_DIR}/install.sh"
+
 vim +PlugInstall +qall > /dev/null
 chsh $USER -s $(which zsh)
 exec zsh -l
