@@ -2,9 +2,9 @@
 
 ## Commit & Push (MANDATORY)
 
-커밋/푸시는 반드시 `/git-commit-push` 스킬을 통해 진행한다.
+커밋/푸시는 반드시 `/git-commit-push` 스킬을 통해 진행.
 
-- 사용자가 명시적으로 요청하기 전까지 절대 실행하지 않음
+- 사용자가 명시적으로 요청하기 전까지 절대 실행 금지
 - Bash로 `git commit`, `git push`를 직접 실행하는 것도 금지
 - push는 사용자의 명시적 허용 후에만 실행
 

@@ -7,21 +7,21 @@ description: Use ONLY when the user explicitly invokes /git-commit-push or direc
 
 ## 발동 조건 (MANDATORY)
 
-이 스킬은 **반드시 사용자가 명시적으로 호출한 경우에만** 실행한다.
+이 스킬은 **반드시 사용자가 명시적으로 호출한 경우에만** 실행할 것.
 
 허용되는 발동:
 - 사용자가 `/git-commit-push`를 직접 입력한 경우
 - 사용자가 "커밋해줘", "푸시해줘", "커밋하자" 등 명시적으로 요청한 경우
 
 **금지되는 발동:**
-- 코드 작업 완료 후 자동으로 실행하는 것
-- Claude의 판단으로 "작업이 끝났으니 커밋도 해야겠다"며 실행하는 것
-- Bash 도구로 `git commit`, `git push`를 직접 실행하는 것
+- 코드 작업 완료 후 자동으로 실행하지 말 것
+- Claude의 판단으로 "작업이 끝났으니 커밋도 해야겠다"며 실행하지 말 것
+- Bash 도구로 `git commit`, `git push`를 직접 실행하지 말 것
 
 ## Workflow
 
-아래 동작을 한 번 수행하고, 별도 instruction이 없으면 반복하지 않는다.
-Claude Code가 변경한 내역이 아니더라도 사용자가 수정하거나 추가한 모든 변경 사항을 포함하여 진행한다.
+아래 동작을 한 번 수행하고, 별도 instruction이 없으면 반복하지 말 것.
+Claude Code가 변경한 내역이 아니더라도 사용자가 수정하거나 추가한 모든 변경 사항을 포함하여 진행할 것.
 
 ```bash
 # 1. 전체 스테이징
@@ -31,7 +31,7 @@ git add .
 git status
 ```
 
-커밋 파일 목록과 메시지 초안을 보여주고 **사용자 승인 대기**.
+커밋 파일 목록과 메시지 초안을 보여주고 **사용자 승인을 대기할 것**.
 
 ```bash
 # 3. 승인 후 커밋
@@ -41,7 +41,7 @@ git commit -m "<emoji> <message>" -m "<description>"
 git push
 ```
 
-> **GPG 서명**: 서명 팝업이 뜰 수 있음. 사용자 action을 기다린다. `--no-gpg-sign`으로 우회 금지.
+> **GPG 서명**: 서명 팝업이 뜰 수 있음. 사용자 action을 기다릴 것. `--no-gpg-sign`으로 우회 금지.
 
 ### upstream 미설정 시
 
@@ -90,4 +90,4 @@ git push --set-upstream origin <branch_name>
 | 데드코드 제거 | ⚰️ |
 | 비즈니스 로직 | 👔 |
 
-적절한 것이 없다면 `gitmoji --list` 실행하여 참조. 그래도 없으면 `✨`로 통일.
+적절한 것이 없다면 `gitmoji --list` 실행하여 참조할 것. 그래도 없으면 `✨`로 통일할 것.

@@ -25,14 +25,17 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   [[ -s "/opt/homebrew/opt/asdf/libexec/asdf.sh" ]] && . /opt/homebrew/opt/asdf/libexec/asdf.sh
   [[ -s "$HOME/.asdf/asdf.sh" ]] && . $HOME/.asdf/asdf.sh
 
+  export PATH="$HOME/.local/bin:$PATH"
   export PATH="$HOMEBREW_DIR/opt/openssl@3/bin:$PATH"
   export PATH="$HOMEBREW_DIR/opt/libxslt/bin:$PATH"
+
   alias ls='ls -Ga'
   alias ll='ls -lGa'
 
   alias python='python3'
   export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/opt/homebrew/opt/mysql@8.0/lib/pkgconfig"
   export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/opt/homebrew/opt/mysql-client@8.0/lib/pkgconfig"
+
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   [[ -d "/home/linuxbrew/.linuxbrew" ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
@@ -49,7 +52,6 @@ fi
 
 # Programs
 export GPG_TTY=$(tty)
-export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 (( $+commands[rbenv] )) && eval "$(rbenv init -)"
 
@@ -68,7 +70,6 @@ alias gbr='git branch -r'
 alias src='source ~/.zshrc'
 alias zshrc='vi ~/.zshrc'
 alias vimrc='vi ~/.vimrc'
-alias keymap='~/.keymap.sh'
 alias c='claude'
 
 
@@ -132,6 +133,3 @@ function cd {
     ls
   fi
 }
-
-
-

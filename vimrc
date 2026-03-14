@@ -9,13 +9,13 @@ Plug 'w0ng/vim-hybrid'
 Plug 'vim-airline/vim-airline'
 
 " Languages
-Plug 'scrooloose/syntastic'
+Plug 'vim-syntastic/syntastic'
 Plug 'davidhalter/jedi-vim'
 Plug 'derekwyatt/vim-scala'
 
 " Util
 Plug 'ervandew/supertab'
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 'airblade/vim-gitgutter'
 
 " snippet

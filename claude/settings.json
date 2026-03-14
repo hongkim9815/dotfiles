@@ -71,7 +71,7 @@
       "Bash(env*)"
     ]
   },
-  "model": "opus",
+  "model": "opusplan",
   "hooks": {
     "Notification": [
       {

@@ -9,19 +9,19 @@ setup () {
   NEW="$DIR/$1"
   [[ -s "$PRIVATE_DIR/$1" ]] && NEW="$PRIVATE_DIR/$1"
 
-  if [ -f $OLD ]; then
-    if [ -L $OLD ]; then
-      rm $OLD
+  if [ -f "$OLD" ]; then
+    if [ -L "$OLD" ]; then
+      rm "$OLD"
     else
-      mv $OLD "$OLD.bak"
+      mv "$OLD" "$OLD.bak"
     fi
   fi
-  ln -s $NEW $OLD
+  ln -s "$NEW" "$OLD"
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install vim git zsh curl gnu-which asdf gitmoji
-  brew update vim git zsh curl gnu-which asdf gitmoji
+  brew upgrade vim git zsh curl gnu-which asdf gitmoji
 
   [[ -f "$HOME/Library/KeyBindings/DefaultKeyBinding.dict" ]] || mkdir -p "$HOME/Library/KeyBindings" && ln -s "$DIR/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
 
@@ -50,7 +50,6 @@ setup gitconfig
 setup vimrc
 setup zshrc
 setup ideavimrc
-setup keymap.sh
 setup theme.zshrc
 [[ "$OSTYPE" == "linux-gnu"* ]] && setup xinitrc
 
@@ -59,7 +58,7 @@ setup theme.zshrc
 [[ -x "$DIR/install_claude.sh" ]] && "$DIR/install_claude.sh"
 
 # Private Claude settings
-PRIVATE_CLAUDE_DIR="$HOME/.dotfiles_private_settings"
+PRIVATE_CLAUDE_DIR="$HOME/.dotfiles_private_setting"
 [[ -x "${PRIVATE_CLAUDE_DIR}/install.sh" ]] && "${PRIVATE_CLAUDE_DIR}/install.sh"
 
 vim +PlugInstall +qall > /dev/null
