@@ -25,7 +25,6 @@
 ├── gitignore               # Git 전역 ignore 패턴
 ├── vimrc                   # Vim 설정 (플러그인, 키맵, 테마)
 ├── ideavimrc               # JetBrains IDE의 IdeaVim 설정
-├── keymap.sh               # Linux 한/영 키매핑 (xmodmap)
 ├── xinitrc                 # Linux X11 초기화 설정
 ├── DefaultKeyBinding.dict  # macOS Home/End 키 동작 재정의
 │
@@ -82,7 +81,6 @@
 | 파일 | 대상 OS | 설명 |
 |---|---|---|
 | `DefaultKeyBinding.dict` | macOS | Home/End 키를 줄 시작/끝으로 동작하게 재정의 |
-| `keymap.sh` | Linux | xmodmap으로 한/영, 한자 키 매핑 |
 | `xinitrc` | Linux | X11 DPMS(화면 절전) 비활성화 |
 
 ---
@@ -101,6 +99,8 @@
 | `github.md` | 커밋/푸시는 반드시 스킬을 통해, PR 리뷰 워크플로우 |
 | `security.md` | 보안 체크리스트, 시크릿 관리 규칙 |
 | `testing.md` | TDD 워크플로우, 최소 80% 커버리지 |
+| `plan.md` | Plan 파일 작성 규칙 (섹션 구조, AI 독자용 어미) |
+| `agent-teams.md` | Agent 팀 생성/관리 워크플로우 |
 
 ### Skills (`claude/skills/`)
 
@@ -144,13 +144,13 @@ git clone https://github.com/hongkim9815/dotfiles ~/.dotfiles
 
 ### Private Settings
 
-별도의 private 저장소(`dotfiles_private_setting`)를 연동할 수 있다:
+별도의 private 저장소(`dotfiles_private`)를 연동할 수 있다:
 
 ```sh
 ~/.dotfiles/install.sh private
 ```
 
-이 옵션을 사용하면 `~/.dotfiles_private_setting`을 클론하고, 동일 이름의 설정 파일이 있으면 private 버전이 우선 적용된다.
+이 옵션을 사용하면 `~/.dotfiles_private`을 클론하고, 동일 이름의 설정 파일이 있으면 private 버전이 우선 적용된다.
 
 ---
 
@@ -158,7 +158,7 @@ git clone https://github.com/hongkim9815/dotfiles ~/.dotfiles
 
 - **Git 로컬 설정**: `~/.gitconfig.local`에 머신별 설정 추가 (gitconfig에서 자동 include)
 - **Private 변수**: `zshrc`의 `PRIVATE_VARIABLE_01~04`를 private 저장소에서 오버라이드
-- **Zsh 확장**: `~/.dotfiles_private_setting/*.zshrc`가 자동 로드됨
+- **Zsh 확장**: `~/.dotfiles_private/*.zshrc`가 자동 로드됨
 
 ---
 

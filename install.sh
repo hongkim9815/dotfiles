@@ -2,7 +2,7 @@
 
 DIRNAME="$(dirname "$0")"
 DIR="$(cd "$DIRNAME" && pwd)"
-PRIVATE_DIR="$HOME/.dotfiles_private_setting"
+PRIVATE_DIR="$HOME/.dotfiles_private"
 
 setup () {
   OLD="$HOME/.$1"
@@ -23,7 +23,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install vim git zsh curl gnu-which asdf gitmoji
   brew upgrade vim git zsh curl gnu-which asdf gitmoji
 
-  [[ -f "$HOME/Library/KeyBindings/DefaultKeyBinding.dict" ]] || mkdir -p "$HOME/Library/KeyBindings" && ln -s "$DIR/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
+  [[ -f "$HOME/Library/KeyBindings/DefaultKeyBinding.dict" ]] || (mkdir -p "$HOME/Library/KeyBindings" && ln -s "$DIR/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict")
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo apt-get update
@@ -42,7 +42,7 @@ fi
 [[ -d ~/.oh-my-zsh ]] || sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 [[ -f ~/.vim/autoload/plug.vim ]] || curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 [[ -d ~/.zsh/zsh-autosuggestions ]] || git clone git@github.com:zsh-users/zsh-autosuggestions -- ~/.zsh/zsh-autosuggestions
-[[ "$1" == "private" ]] && [[ ! -d ~/.dotfiles_private_setting ]] && git clone git@github.com:hongkim9815/dotfiles_private_setting -- ~/.dotfiles_private_setting
+[[ "$1" == "private" ]] && [[ ! -d ~/.dotfiles_private ]] && git clone git@github.com:hongkim9815/dotfiles_private -- ~/.dotfiles_private
 
 
 setup gitignore
@@ -58,7 +58,7 @@ setup theme.zshrc
 [[ -x "$DIR/install_claude.sh" ]] && "$DIR/install_claude.sh"
 
 # Private Claude settings
-PRIVATE_CLAUDE_DIR="$HOME/.dotfiles_private_setting"
+PRIVATE_CLAUDE_DIR="$HOME/.dotfiles_private"
 [[ -x "${PRIVATE_CLAUDE_DIR}/install.sh" ]] && "${PRIVATE_CLAUDE_DIR}/install.sh"
 
 vim +PlugInstall +qall > /dev/null
