@@ -70,7 +70,8 @@ alias gbr='git branch -r'
 alias src='source ~/.zshrc'
 alias zshrc='vi ~/.zshrc'
 alias vimrc='vi ~/.vimrc'
-alias c='claude'
+alias cc='claude'
+alias cx='codex'
 
 
 # Mistakes
@@ -100,8 +101,8 @@ alias python='python3'
 alias pip='pip3'
 #   Springboot
 alias gradlew='./gradlew'
-alias ktlint='./bin/ktlint'
-alias tt='./bin/test'
+alias ktlint='./gradlew clean ktlintFormat'
+alias tt='./gradlew clean check'
 
 
 # Functions
@@ -133,3 +134,17 @@ function cd {
     ls
   fi
 }
+
+# bun completions
+[ -s "/Users/eric/.bun/_bun" ] && source "/Users/eric/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias cws='~/claude-workspace'
+
+upgrade-claude() {
+    brew upgrade claude-code && xattr -dr com.apple.quarantine $(which claude)
+}
+

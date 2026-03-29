@@ -58,8 +58,29 @@ git push --set-upstream origin <branch_name>
 ```
 
 - `<emoji>`: 유니코드 emoji (`✨`), shortcode(`:sparkles:`) 금지
-- `<message>`: 영어 imperative, 한 줄 요약
-- `<description>`: 변경 내용 한국어 요약, 3줄 내외 (선택)
+- `<message>`: 영어 imperative, **50자 이내**, 한 줄 요약
+- `<description>`: 변경 내용 한국어 요약, **불릿 포인트 3줄 이내**. 장황한 설명 금지. 없으면 생략 가능.
+
+### Bad Example
+
+```
+🔧 Update zshrc configuration and gitconfig settings to deprecate old aliases and add main as default branch
+
+- zshrc에서 더 이상 사용하지 않는 Python 관련 로컬 설정들을 정리하고,
+  pyenv 초기화 로직이 중복 실행되던 문제를 수정함. 또한 direnv 관련
+  설정도 함께 추가하여 프로젝트별 환경 변수 자동 로드가 가능하도록 함.
+- gitconfig에서 기존 master를 default branch로 사용하던 설정을 main으로
+  변경하고, 관련 alias들도 함께 업데이트함.
+```
+
+### Good Example
+
+```
+🎨 Deprecate old configs, set main as default branch
+
+- zshrc: Python 로컬 설정 제거, direnv 추가
+- gitconfig: default branch master → main 변경
+```
 
 ## Emoji Quick Reference
 
