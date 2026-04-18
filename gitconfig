@@ -9,6 +9,7 @@
 [user]
 	email = hongkim9815@gmail.com
 	name = hongkim9815
+	signingkey = C86940C63062A6B0
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -17,6 +18,6 @@
 [submodule]
 	recurse = true
 [commit]
-	gpgsign = false
+	gpgsign = true
 [init]
 	defaultBranch = main
