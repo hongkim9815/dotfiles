@@ -32,7 +32,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   alias ls='ls -Ga'
   alias ll='ls -lGa'
 
-  alias python='python3'
   export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/opt/homebrew/opt/mysql@8.0/lib/pkgconfig"
   export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/opt/homebrew/opt/mysql-client@8.0/lib/pkgconfig"
 
@@ -96,9 +95,6 @@ PRIVATE_VARIABLE_04="PRIVATE_VARIABLE_04"
 
 
 # Programs
-#   Python
-alias python='python3'
-alias pip='pip3'
 #   Springboot
 alias gradlew='./gradlew'
 alias ktlint='./gradlew clean ktlintFormat'
@@ -145,6 +141,16 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 alias cws='~/claude-workspace'
 
 upgrade-claude() {
-    brew upgrade claude-code && xattr -dr com.apple.quarantine $(which claude)
+    brew upgrade claude-code@latest
+    local claude_bin="$(brew --prefix)/bin/claude"
+    [[ -f "$claude_bin" ]] && xattr -d com.apple.quarantine "$claude_bin" 2>/dev/null
+    return 0
+}
+
+upgrade-codex() {
+    brew upgrade codex
+    local codex_bin="$(brew --prefix)/bin/codex"
+    [[ -f "$codex_bin" ]] && xattr -d com.apple.quarantine "$codex_bin" 2>/dev/null
+    return 0
 }
 

@@ -49,6 +49,17 @@ git push
 git push --set-upstream origin <branch_name>
 ```
 
+### 푸시 후 PR 링크
+
+`git push` 출력에 아래와 같은 PR 생성 URL이 포함된 경우 사용자에게 공유:
+
+```
+remote: Create a pull request for '...' on GitHub by visiting:
+remote:      https://github.com/.../pull/new/<branch>
+```
+
+출력에서 URL을 추출하여 응답에 포함. 없으면 생략.
+
 ## Commit Message 형식
 
 ```

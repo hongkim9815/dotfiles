@@ -1,6 +1,6 @@
 # Security Guidelines
 
-## 커밋 전 보안 체크리스트 (MANDATORY)
+## 커밋 전 보안 체크리스트
 
 모든 커밋 전 아래 항목 확인:
 - [ ] 하드코딩된 시크릿 없음 (API key, password, token)

@@ -1,6 +1,6 @@
 # Testing Requirements
 
-## 테스트 전략 (MANDATORY)
+## 테스트 전략
 
 통합 테스트 우선. 환경 제약으로 불가능한 경우에만 unit test로 대체.
 
