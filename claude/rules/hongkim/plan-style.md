@@ -14,32 +14,21 @@ plan은 AI 독자용 문서임 — Human 독자용 원칙 적용 금지.
 - 추가 확인 필요 사항은 `AskUserQuestion` 으로 질의
 - plan 파일 작성 금지 (이 단계에서)
 
-**2단계 — 초안 저장** (맥락 수집 완료 판단 시):
-1. plan 파일을 `./.claude/plan/` 에 저장 (`Write` 도구 사용, 저장 위치 섹션 참조)
-2. 저장된 plan 전체 내용을 사용자에게 텍스트로 표시
-3. 사용자의 트리거 신호 대기 (`ExitPlanMode` 호출 금지)
-
-**3단계 — 승인** (트리거 수신 시):
-- `ExitPlanMode` 호출
-
-트리거 신호 예시:
-- "report ㄱㄱ?", "report 만들어줘", "report 줘"
-- "plan 완성해줘", "이제 plan 써줘", "정리해줘"
-- "ㄱㄱ", "가자", "go"
-
-**예외**: 사용자가 "plan 짜줘", "계획 세워줘" 등으로 처음부터 명시적 plan 작성을 요청한 경우
-→ 2단계(파일 저장 + 표시) 수행 후 트리거 대기 없이 바로 `ExitPlanMode` 호출
+**2단계 — 작성 및 저장** (사용자가 명시적으로 plan 작성 요청 시):
+- "plan 짜줘", "계획 세워줘", "plan 써줘" 등의 명시적 요청이 오면 즉시 작성 시작
+- 작성 완료 판단 시 `./.claude/plans/` 에 파일 저장 (`Write` 도구 사용, 저장 위치 섹션 참조)
+- 저장 완료 후 대기 — plan 모드 종료는 Claude Code 자체 기능에 위임
 
 ---
 
 ## 저장 위치
 
-plan 파일은 반드시 **현재 작업 중인 repository의 `.claude/plan/`** 에 저장.
+plan 파일은 반드시 **현재 작업 중인 repository의 `.claude/plans/`** 에 저장.
 
-- 저장 경로 패턴: `./.claude/plan/**`
-- 파일명 형식: `./.claude/plan/{ISSUE-ID}-{kebab-case-title}.md`
-- ISSUE-ID 없는 경우: `./.claude/plan/{kebab-case-title}.md`
-- 예시: `./.claude/plan/PROJ-123-test-db-migration.md`
+- 저장 경로 패턴: `./.claude/plans/**`
+- 파일명 형식: `./.claude/plans/{ISSUE-ID}-{kebab-case-title}.md`
+- ISSUE-ID 없는 경우: `./.claude/plans/{kebab-case-title}.md`
+- 예시: `./.claude/plans/PROJ-123-test-db-migration.md`
 - `.`은 현재 작업 디렉토리 기준 — 절대경로·전역경로 사용 금지
 - `~/.claude/plans/` 또는 다른 전역 경로에 저장 금지
 ---
