@@ -20,8 +20,8 @@ setup () {
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  brew install vim git zsh curl gnu-which asdf gitmoji
-  brew upgrade vim git zsh curl gnu-which asdf gitmoji
+  brew install vim git zsh curl gnu-which mise gitmoji prettier
+  brew upgrade vim git zsh curl gnu-which mise gitmoji prettier
 
   [[ -f "$HOME/Library/KeyBindings/DefaultKeyBinding.dict" ]] || (mkdir -p "$HOME/Library/KeyBindings" && ln -s "$DIR/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict")
 
@@ -31,8 +31,8 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   (brew --version >> /dev/null 2>&1) || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   if [[ -d "$HOME/.linuxbrew" ]] || [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-    brew install asdf gitmoji
-    brew upgrade asdf gitmoji
+    brew install mise gitmoji prettier
+    brew upgrade mise gitmoji prettier
 
   fi
 fi
@@ -51,7 +51,6 @@ setup vimrc
 setup zshrc
 setup ideavimrc
 setup theme.zshrc
-[[ "$OSTYPE" == "linux-gnu"* ]] && setup xinitrc
 
 
 # Claude settings

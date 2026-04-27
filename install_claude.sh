@@ -5,11 +5,11 @@
 # dotfiles 구조:
 #   dotfiles/
 #     claude/
-#       skills/       → ~/.claude/skills/{name} 각각 symlink
-#       rules/        → ~/.claude/rules/{name}  각각 symlink
-#       agents/       → ~/.claude/agents/{name} 각각 symlink
-#       settings.json → ~/.claude/settings.json symlink
-#       CLAUDE.md     → ~/.claude/CLAUDE.md     symlink
+#       skills/        → ~/.claude/skills/{name} 각각 symlink
+#       rules/         → ~/.claude/rules/{name}  각각 symlink
+#       agents/        → ~/.claude/agents/{name} 각각 symlink
+#       settings.json  → ~/.claude/settings.json symlink
+#       statusline.sh  → ~/.claude/statusline.sh symlink
 #     install_claude.sh
 
 set -euo pipefail
@@ -127,13 +127,8 @@ link_file \
   "settings.json"
 
 link_file \
-  "${CLAUDE_SRC}/CLAUDE.md" \
-  "${CLAUDE_DIR}/CLAUDE.md" \
-  "CLAUDE.md (전역 지침)"
-
-link_file \
-  "${CLAUDE_SRC}/notification-hook.sh" \
-  "${CLAUDE_DIR}/notification-hook.sh" \
-  "notification-hook.sh (알림 훅)"
+  "${CLAUDE_SRC}/statusline.sh" \
+  "${CLAUDE_DIR}/statusline.sh" \
+  "statusline.sh (상태표시줄 스크립트)"
 
 echo -e "\n${GREEN}완료.${RESET} ${CLAUDE_DIR} 에 설치됐습니다."

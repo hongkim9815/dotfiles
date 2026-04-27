@@ -3,7 +3,6 @@
 
 # Zsh
 setopt interactivecomments
-fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit && compinit
 autoload -Uz bashcompinit && bashcompinit
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -18,12 +17,7 @@ source $HOME/.theme.zshrc
 
 # OS Dependency
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  # [[ -s "/usr/local/bin/brew" ]] && eval $(/usr/local/bin/brew shellenv)
   [[ -d "/opt/homebrew" ]] && [[ -s "/opt/homebrew/bin/brew" ]] && eval $(/opt/homebrew/bin/brew shellenv)
-
-  [[ -s "/usr/local/opt/asdf/libexec/asdf.sh" ]] && . /usr/local/opt/asdf/libexec/asdf.sh
-  [[ -s "/opt/homebrew/opt/asdf/libexec/asdf.sh" ]] && . /opt/homebrew/opt/asdf/libexec/asdf.sh
-  [[ -s "$HOME/.asdf/asdf.sh" ]] && . $HOME/.asdf/asdf.sh
 
   export PATH="$HOME/.local/bin:$PATH"
   export PATH="$HOMEBREW_DIR/opt/openssl@3/bin:$PATH"
@@ -40,9 +34,6 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   [[ -d "/home/linuxbrew/.linuxbrew" ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
   [[ -d "$HOME/.linuxbrew" ]] && eval $($HOME/.linuxbrew/bin/brew shellenv)
 
-  [[ -d "/home/linuxbrew/.linuxbrew" ]] && . /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh
-  [[ -d "$HOME/.linuxbrew" ]] && . $HOME/.linuxbrew/opt/asdf/libexec/asdf.sh
-
   alias ls='ls -a --color=auto'
   alias ll='ls -la --color=auto'
 
@@ -50,9 +41,8 @@ fi
 
 
 # Programs
+eval "$(mise activate zsh)"
 export GPG_TTY=$(tty)
-export PATH="$HOME/.rbenv/bin:$PATH"
-(( $+commands[rbenv] )) && eval "$(rbenv init -)"
 
 which direnv > /dev/null && eval "$(direnv hook zsh)"
 
@@ -130,13 +120,6 @@ function cd {
     ls
   fi
 }
-
-# bun completions
-[ -s "/Users/eric/.bun/_bun" ] && source "/Users/eric/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 alias cws='~/claude-workspace'
 
