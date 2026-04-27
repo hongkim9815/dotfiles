@@ -91,7 +91,7 @@ PRIVATE_VARIABLE_02="PRIVATE_VARIABLE_02"
 PRIVATE_VARIABLE_03="PRIVATE_VARIABLE_03"
 PRIVATE_VARIABLE_04="PRIVATE_VARIABLE_04"
 
-[[ -d "$HOME/.dotfiles_private" ]] && source $HOME/.dotfiles_private/*.zshrc
+[[ -d "$HOME/.dotfiles-private" ]] && source $HOME/.dotfiles-private/*.zshrc
 
 
 # Programs
@@ -116,7 +116,7 @@ function dps {
   if [[ $1 == "" ]];
   then echo "Type command";
   else
-    builtin pushd ~/.dotfiles_private > /dev/null; eval $1;
+    builtin pushd ~/.dotfiles-private > /dev/null; eval $1;
     builtin popd > /dev/null;
   fi
 }

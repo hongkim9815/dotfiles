@@ -2,7 +2,7 @@
 
 DIRNAME="$(dirname "$0")"
 DIR="$(cd "$DIRNAME" && pwd)"
-PRIVATE_DIR="$HOME/.dotfiles_private"
+PRIVATE_DIR="$HOME/.dotfiles-private"
 
 setup () {
   OLD="$HOME/.$1"
@@ -42,7 +42,7 @@ fi
 [[ -d ~/.oh-my-zsh ]] || sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 [[ -f ~/.vim/autoload/plug.vim ]] || curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 [[ -d ~/.zsh/zsh-autosuggestions ]] || git clone git@github.com:zsh-users/zsh-autosuggestions -- ~/.zsh/zsh-autosuggestions
-[[ "$1" == "private" ]] && [[ ! -d ~/.dotfiles_private ]] && git clone git@github.com:hongkim9815/dotfiles_private -- ~/.dotfiles_private
+[[ "$1" == "private" ]] && [[ ! -d ~/.dotfiles-private ]] && git clone git@github.com:hongkim9815/dotfiles-private -- ~/.dotfiles-private
 
 
 setup gitignore
@@ -58,7 +58,7 @@ setup theme.zshrc
 [[ -x "$DIR/install_claude.sh" ]] && "$DIR/install_claude.sh"
 
 # Private Claude settings
-PRIVATE_CLAUDE_DIR="$HOME/.dotfiles_private"
+PRIVATE_CLAUDE_DIR="$HOME/.dotfiles-private"
 [[ -x "${PRIVATE_CLAUDE_DIR}/install.sh" ]] && "${PRIVATE_CLAUDE_DIR}/install.sh"
 
 vim +PlugInstall +qall > /dev/null

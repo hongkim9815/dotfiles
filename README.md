@@ -66,7 +66,7 @@ git clone https://github.com/hongkim9815/dotfiles ~/.dotfiles
 ### Local Overrides
 
 - **Git**: add machine-specific config to `~/.gitconfig.local` (auto-included)
-- **Private vars**: override `PRIVATE_VARIABLE_01~04` in `~/.dotfiles_private/*.zshrc`
+- **Private vars**: override `PRIVATE_VARIABLE_01~04` in `~/.dotfiles-private/*.zshrc`
 
 <details>
 <summary>Linux build dependencies (pyenv, etc.)</summary>
