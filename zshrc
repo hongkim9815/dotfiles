@@ -42,7 +42,6 @@ fi
 
 # Programs
 eval "$(mise activate zsh)"
-export GPG_TTY=$(tty)
 
 which direnv > /dev/null && eval "$(direnv hook zsh)"
 
