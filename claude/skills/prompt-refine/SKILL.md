@@ -52,21 +52,27 @@ Read {파일 경로}
 - negative constraint 누락 — 명시된 금지 조건이 충분한지
 - 실패 사례/예외가 명시되지 않은 규칙
 - 트리거 조건과 금지 조건이 비대칭인 경우 (허용은 구체적, 금지는 모호)
+- **short-term 진단 누락**: 현재 시도의 즉각적 오류 지점이 명시되지 않은 경우 (ReflectivePrompt)
+- **long-term 패턴 누락**: 반복 실패 패턴이나 누적 인사이트를 저장·재사용할 지점이 없는 경우 (ReflectivePrompt)
+- 단일 관점으로만 진단 가능한 규칙 → 다각도 해석 가능한지 (MAR 페르소나 diversity)
 
 #### 자동화 축
 **근거 논문**: CoolPrompt(zero-config 최적화), System Prompt Meta-Learning(system/task 분리), CALM(verbal+numerical 지침)
 
 점검 항목:
 - Signature 추출 가능 여부 — 입력·출력·사전조건·사후조건이 명시적인지
-- System-level 지침(페르소나·톤·일반 원칙)과 Task-level 지침(구체적 동작)이 혼재하는지
+- **system-level 지침**(task-agnostic, 불변: 페르소나·톤·일반 원칙)과 **task-level 지침**(조건 기반, 동적: 구체적 동작)이 혼재하는지 — 분리 가능하면 분리 (System Prompt Meta-Learning bilevel 구조)
 - 수치나 구조적 제약(줄 수 제한, 형식 규칙)이 자연어로만 표현된 경우 → 명시적 표 또는 조건으로 전환 가능한지
+- local optima(특정 상황에서만 통하는 규칙) 탈출 장치 없는 경우 — 예외 분기 또는 fallback 추가 가능한지 (CALM collapse mechanism)
 
 #### 워크플로우 축
 **근거 논문**: SAGE(단계별 role 분리), Dynamic Runtime Graphs(정적 템플릿 → ACG), Self-Evolving Memory(메모리 누적 지점)
 
 점검 항목:
 - 단계가 묵시적으로 섞여 있는지 → 명시적 Step 분리 가능 여부
-- 정적으로 하드코딩된 흐름 → 조건 분기(X 상태일 때 → Y 실행) 로 동적화 가능한지
+- **static(사전정의) vs dynamic(런타임 결정)** 분기 미구분 — 항상 동일하게 실행되는 흐름 vs 조건에 따라 달라지는 흐름을 분리 가능한지 (Dynamic Runtime Graphs ACG)
+- quality gate 누락 — 다음 단계 진입 전 검증 조건(SAGE Critic 이중 필터링)이 명시되지 않은 경우
+- task 유형별 분기 없이 단일 흐름으로만 표현된 경우 → cluster 기반 조건 분기 가능한지 (CluE)
 - 이전 실행 결과를 다음에 활용하는 누적 패턴이 있는지 (메모리 지점)
 
 ### 3. 개선안 출력
