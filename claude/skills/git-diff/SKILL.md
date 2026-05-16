@@ -8,7 +8,12 @@ description: 현재 브랜치의 main 대비 변경사항을 요약. "변경점"
 ## 발동 조건
 
 - "변경점", "diff", "PR 내용", "이 브랜치 뭐 바꿨어", "브랜치 변경사항", "컨텍스트로 올려줘"
-- 현재 브랜치가 main이 아닌 경우에만 의미 있음
+
+**사전조건:**
+- git repo 존재
+- 현재 브랜치가 main이 아닌 경우에만 실행
+  - main 브랜치에서 요청 시 → "현재 main 브랜치임. 비교 대상 브랜치를 지정해줘" 보고 후 종료
+- `origin/main` 존재 확인 — 없으면 `git fetch origin main` 후 재시도
 
 ## Workflow
 
@@ -34,14 +39,17 @@ git diff ${BASE}..HEAD --stat
 
 ### 4. 실제 diff 조회
 
-변경 파일 통계를 보고 핵심 디렉토리를 판단하여 diff 조회.
-테스트 파일, 자동 생성 파일(schema.rb 등)은 제외하거나 후순위로.
+변경 파일 통계 기준으로 아래 우선순위로 diff 조회:
+
+| 우선순위 | 대상 | 이유 |
+|---|---|---|
+| 1순위 | 비즈니스 로직 (`app/`, `lib/`, `src/`) | 핵심 변경 |
+| 2순위 | 설정·마이그레이션 (`config/`, `db/migrate/`) | 구조 변경 |
+| 제외 | 테스트 파일, 자동 생성 파일 (`schema.rb`, `*.lock`) | 노이즈 |
 
 ```bash
 git diff ${BASE}..HEAD -- app/ lib/ config/ db/migrate/
 ```
-
-파일이 너무 많으면 `--stat` 기준으로 변경량 큰 파일 위주로 선별.
 
 ### 5. 요약 제공
 
@@ -64,5 +72,5 @@ git diff ${BASE}..HEAD -- app/ lib/ config/ db/migrate/
 
 ## 주의사항
 
-- `origin/main`이 최신이 아닐 수 있음 → 필요 시 `git fetch origin main` 선행
-- diff가 너무 크면 핵심 파일 위주로 선별하여 보여주고, 나머지는 `--stat`으로 대체
+- `origin/main` 최신화: 마지막 fetch가 세션 내에서 없었던 경우 → `git fetch origin main` 선행
+- diff가 변경 파일 20개 초과 시 → `--stat` 결과만 제공 후 "특정 파일/디렉토리 상세 조회 원하면 말해줘" 안내

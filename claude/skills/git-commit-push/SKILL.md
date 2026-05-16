@@ -13,12 +13,19 @@ description: Use ONLY when the user explicitly invokes /git-commit-push or direc
 - 사용자가 `/git-commit-push`를 직접 입력한 경우
 - 사용자가 "커밋해줘", "푸시해줘", "커밋하자" 등 명시적으로 요청한 경우
 
+금지되는 트리거 (모호한 표현):
+- "저장해줘", "반영해줘", "올려줘" — 커밋 의도가 명확하지 않으면 확인 후 진행
+
 **금지되는 발동:**
 - 코드 작업 완료 후 자동으로 실행하지 말 것
 - Claude의 판단으로 "작업이 끝났으니 커밋도 해야겠다"며 실행하지 말 것
 - Bash 도구로 `git commit`, `git push`를 직접 실행하지 말 것
 
 ## Workflow
+
+**사전조건 확인:**
+- git repo 존재 확인
+- 변경사항 없으면 → "커밋할 변경사항 없음" 보고 후 종료
 
 아래 동작을 한 번 수행하고, 별도 instruction이 없으면 반복하지 말 것.
 Claude Code가 변경한 내역이 아니더라도 사용자가 수정하거나 추가한 모든 변경 사항을 포함하여 진행할 것.
@@ -31,15 +38,27 @@ git add .
 git status
 ```
 
+**스테이징 후 quality gate:**
+- `.env`, `*secret*`, `*credential*`, `*password*` 패턴 파일 포함 시 → 사용자에게 경고 후 해당 파일 unstage 여부 확인
+
 커밋 파일 목록과 메시지 초안을 보여주고 **사용자 승인을 대기할 것**.
+- 승인 거부("이 파일 빼줘" 등) 시: 해당 파일 `git restore --staged <file>` 후 목록 재확인
 
 ```bash
 # 3. 승인 후 커밋
 git commit -m "<emoji> <message>" -m "<description>"
+```
 
+- pre-commit hook 실패 시: 실패 원인 보고 → 수정 후 재커밋 (`--no-verify` 우회 금지)
+- 커밋 성공 후:
+
+```bash
 # 4. 푸시
 git push
 ```
+
+- push reject 시: 원인 확인 (upstream 미설정 / 원격 충돌) → 원인별 처리 후 재시도
+- 원격 충돌 시: 강제 push 금지 — 사용자에게 상황 보고 후 판단 위임
 
 > **GPG 서명**: 서명 팝업이 뜰 수 있음. 사용자 action을 기다릴 것. `--no-gpg-sign`으로 우회 금지.
 

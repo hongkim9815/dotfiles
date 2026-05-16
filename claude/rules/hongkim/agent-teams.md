@@ -6,6 +6,8 @@
 - 독립적인 태스크 2개 이상 존재
 - 태스크 간 공유 상태 또는 순차 의존성 없음
 - 병렬 처리 시 컨텍스트 절약 또는 속도 이점이 명확함
+  - 명확한 경우: 각 태스크가 독립된 파일 집합 대상, 또는 태스크당 예상 소요 >3분
+  - 불명확한 경우: 단일 에이전트로 처리
 
 단일 태스크는 팀 미사용. 에이전트 오버헤드가 이득보다 큼.
 
@@ -18,8 +20,12 @@
 3. `Agent` 스폰 — `team_name`, `name` 파라미터 필수 지정
 4. `TaskUpdate` — 태스크 owner 에이전트명으로 할당
 5. 에이전트 작업 완료 대기 — 자동 메시지 수신
-6. `SendMessage(type: "shutdown_request")` — 각 에이전트에 종료 요청
-7. `TeamDelete` — 팀 리소스 정리
+   - 미응답 시: `TaskList` 로 상태 확인 → 블록된 에이전트에 `SendMessage` 로 상태 질의
+6. 결과 검증 — 각 에이전트 결과가 태스크 description 기준 충족하는지 확인
+   - 미충족 시: 해당 에이전트에 재작업 요청 후 5단계로 복귀
+7. `SendMessage(type: "shutdown_request")` — 각 에이전트에 종료 요청
+   - approve 거부 시: `TaskList` 확인 후 미완료 태스크 처리 후 재요청
+8. `TeamDelete` — 팀 리소스 정리
 
 ---
 
@@ -30,6 +36,8 @@
 | 파일 읽기, 탐색, 검색만 | `Explore` |
 | 파일 쓰기/수정, Bash 실행 | `general-purpose` |
 | 계획 수립 (수정 없음) | `Plan` |
+| 읽기+쓰기 혼재 | `general-purpose` |
+| 불확실한 경우 | `general-purpose` |
 
 ---
 
