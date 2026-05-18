@@ -13,8 +13,15 @@ description: Use ONLY when the user explicitly invokes /git-commit-push or direc
 - 사용자가 `/git-commit-push`를 직접 입력한 경우
 - 사용자가 "커밋해줘", "푸시해줘", "커밋하자" 등 명시적으로 요청한 경우
 
-금지되는 트리거 (모호한 표현):
-- "저장해줘", "반영해줘", "올려줘" — 커밋 의도가 명확하지 않으면 확인 후 진행
+모호 트리거 — 사용자에게 의도 확인 후 진행:
+
+| 발화 | 확인 프롬프트 |
+|---|---|
+| "저장해줘" | "파일 저장만? 또는 git 커밋까지?" |
+| "반영해줘" | "로컬 적용만? 또는 원격 푸시까지?" |
+| "올려줘" | "git 푸시 진행할까?" |
+
+사용자 응답이 커밋/푸시 의도를 명확히 하기 전까지 git 명령 실행 금지.
 
 **금지되는 발동:**
 - 코드 작업 완료 후 자동으로 실행하지 말 것
@@ -23,37 +30,44 @@ description: Use ONLY when the user explicitly invokes /git-commit-push or direc
 
 ## Workflow
 
-**사전조건 확인:**
+### Step 0 — 사전조건 (static, 1회만 실행)
 - git repo 존재 확인
-- 변경사항 없으면 → "커밋할 변경사항 없음" 보고 후 종료
+- 변경사항 없음 → "커밋할 변경사항 없음" 보고 후 종료
+- 이후 별도 instruction 없이 재실행 금지
 
-아래 동작을 한 번 수행하고, 별도 instruction이 없으면 반복하지 말 것.
 Claude Code가 변경한 내역이 아니더라도 사용자가 수정하거나 추가한 모든 변경 사항을 포함하여 진행할 것.
 
-```bash
-# 1. 전체 스테이징
-git add .
+### Step 1 — 스테이징 (static)
 
-# 2. 커밋 대상 확인
+```bash
+git add .
 git status
 ```
 
-**스테이징 후 quality gate:**
-- `.env`, `*secret*`, `*credential*`, `*password*` 패턴 파일 포함 시 → 사용자에게 경고 후 해당 파일 unstage 여부 확인
+### Step 2 — Security Gate (dynamic)
+
+| 패턴 | 처리 |
+|---|---|
+| `.env`, `*secret*`, `*credential*`, `*password*` | 사용자 경고 후 unstage 여부 확인 |
+| 50MB 초과 단일 파일 | 사용자 경고 후 LFS·exclude 여부 확인 |
+| binary blob 신규 (`*.bin`, `*.exe`, `*.so`) | 사용자에게 의도 확인 |
+
+### Step 3 — 승인 대기 (dynamic)
 
 커밋 파일 목록과 메시지 초안을 보여주고 **사용자 승인을 대기할 것**.
 - 승인 거부("이 파일 빼줘" 등) 시: 해당 파일 `git restore --staged <file>` 후 목록 재확인
 
+### Step 4 — 커밋 (static)
+
 ```bash
-# 3. 승인 후 커밋
 git commit -m "<emoji> <message>" -m "<description>"
 ```
 
 - pre-commit hook 실패 시: 실패 원인 보고 → 수정 후 재커밋 (`--no-verify` 우회 금지)
-- 커밋 성공 후:
+
+### Step 5 — 푸시 (dynamic)
 
 ```bash
-# 4. 푸시
 git push
 ```
 
@@ -91,54 +105,7 @@ remote:      https://github.com/.../pull/new/<branch>
 - `<message>`: 영어 imperative, **50자 이내**, 한 줄 요약
 - `<description>`: 변경 내용 한국어 요약, **불릿 포인트 3줄 이내**. 장황한 설명 금지. 없으면 생략 가능.
 
-### Bad Example
+### 참조 자료
 
-```
-🔧 Update zshrc configuration and gitconfig settings to deprecate old aliases and add main as default branch
-
-- zshrc에서 더 이상 사용하지 않는 Python 관련 로컬 설정들을 정리하고,
-  pyenv 초기화 로직이 중복 실행되던 문제를 수정함. 또한 direnv 관련
-  설정도 함께 추가하여 프로젝트별 환경 변수 자동 로드가 가능하도록 함.
-- gitconfig에서 기존 master를 default branch로 사용하던 설정을 main으로
-  변경하고, 관련 alias들도 함께 업데이트함.
-```
-
-### Good Example
-
-```
-🎨 Deprecate old configs, set main as default branch
-
-- zshrc: Python 로컬 설정 제거, direnv 추가
-- gitconfig: default branch master → main 변경
-```
-
-## Emoji Quick Reference
-
-| 상황 | Emoji |
-|------|-------|
-| 새 기능 | ✨ |
-| 버그 수정 | 🐛 |
-| 긴급 핫픽스 | 🚑️ |
-| 리팩토링 | ♻️ |
-| 테스트 | ✅ |
-| 문서 | 📝 |
-| 설정 파일 | 🔧 |
-| 빌드/스크립트 | 🔨 |
-| 성능 개선 | ⚡️ |
-| 보안 수정 | 🔒️ |
-| 코드·파일 삭제 | 🔥 |
-| 아키텍처 변경 | 🏗️ |
-| 의존성 추가/제거 | ➕ / ➖ |
-| 의존성 업그레이드 | ⬆️ |
-| 타입 추가/변경 | 🏷️ |
-| 브랜치 병합 | 🔀 |
-| 배포 | 🚀 |
-| 프로젝트 시작 | 🎉 |
-| WIP | 🚧 |
-| 린터/컴파일 경고 수정 | 🚨 |
-| 코드 구조/포맷 개선 | 🎨 |
-| 로그 추가/제거 | 🔊 / 🔇 |
-| 데드코드 제거 | ⚰️ |
-| 비즈니스 로직 | 👔 |
-
-적절한 것이 없다면 `gitmoji --list` 실행하여 참조할 것. 그래도 없으면 `✨`로 통일할 것.
+- 좋은/나쁜 예시 + 위반 진단표: [`examples.md`](./examples.md)
+- Emoji 빠른 참조표: [`emoji-reference.md`](./emoji-reference.md)

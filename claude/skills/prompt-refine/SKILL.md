@@ -13,15 +13,25 @@ description: 기존 prompt/rule/skill 파일을 분석하여 개선안 제시. "
 - 사용자가 `/prompt-refine`을 직접 입력한 경우
 - 사용자가 파일 경로와 함께 "개선", "다듬어줘", "손봐줘" 등을 요청한 경우
 - 사용자가 rule 또는 skill 파일의 품질 개선을 명시적으로 요청한 경우
+- 사용자가 "rules·skills 전부", "전부 다 다듬어줘" 등 **범위 일괄 요청** (batch 모드)
 
 **금지:**
 - 파일 자동 수정 금지 — 개선안 제시 후 반드시 사용자 승인 대기
 - 승인 없이 `Write` 또는 `Edit` 도구로 원본 파일 변경 금지
-- 여러 파일을 동시에 수정하는 것 금지 — 1회 1파일
+- 동시 수정 금지 — 1회 1파일 (batch 모드에서도 Edit 호출은 순차)
 
 ---
 
-## Workflow
+## 실행 모드 분기 (MANDATORY)
+
+| 조건 | 모드 | 처리 |
+|---|---|---|
+| 단일 파일 경로 제공 | single | 아래 Workflow 그대로 진행 |
+| "전부", "모두", "rules 다", "skills 다" 등 범위 일괄 요청 | batch | 아래 Batch Workflow 진행 |
+
+---
+
+## Workflow (single 모드)
 
 ### 1. 대상 파일 확인
 
@@ -119,14 +129,41 @@ EvolveR 관점: {재사용 시너지 관점에서 함께 다듬을 후보 파일
 
 ---
 
+## Batch Workflow
+
+### B1. 대상 파일 수집
+- 사용자 요청 범위 해석 (`rules 전부`·`skills 전부`·`rules + skills 전부` 등)
+- 해당 디렉토리의 `.md` 파일 전체 목록화
+- 모든 파일 **병렬 Read**
+
+### B2. 4축 분석 (파일별)
+- 각 파일에서 핵심 개선 지점 1~3개씩 추출
+- 파일별 4축 점검은 동일하게 적용
+
+### B3. 통합 우선순위 출력
+- 단일 표에 전체 파일 통합 (파일·축·근거·요약 컬럼)
+- 파일별 상세 변경안은 `<details>` 접기 블록으로 계층화
+
+### B4. 적용 범위 확인
+- 사용자에게 확인: "전체 적용 / 상위 N개 / 특정 번호 선택"
+
+### B5. 순차 적용 (MANDATORY)
+- 승인 범위를 우선순위 순서로 **1파일씩** `Edit` 호출
+- 각 파일 적용 후 다음 파일로 진행 (재승인 불필요)
+- **중단 트리거**: 사용자가 "취소"·"중단"·"멈춰" 발화 시 즉시 정지
+- **충돌 발생**: Edit 실패 시 해당 파일 건너뛰고 사용자 보고, 나머지는 계속 진행
+- 모든 파일 적용 완료 후 단일 요약 보고
+
+---
+
 ## 사용 예시
 
 ```
 # 단일 파일 개선
-prompt-refine ~/.dotfiles/claude/rules/hongkim/plan-style.md
+prompt-refine ~/.dotfiles/claude/rules/hongkim/principles.md
 
 # 한국어 트리거
-이 rule 개선해줘: ~/.dotfiles/claude/rules/hongkim/principles.md
+이 rule 개선해줘: ~/.dotfiles/claude/rules/hongkim/coding-style.md
 
 # skill 손보기
 ~/.dotfiles/claude/skills/git-commit-push/SKILL.md 다듬어줘
