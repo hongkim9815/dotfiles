@@ -28,7 +28,7 @@ log_section() { echo -e "\n${CYAN}[$*]${RESET}"; }
 
 # ─── 경로 설정 ────────────────────────────────────────────────────────────────
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CLAUDE_SRC="${DOTFILES_DIR}/claude"
+CLAUDE_SRC="${DOTFILES_DIR}/agent"
 CLAUDE_DIR="${HOME}/.claude"
 
 if [[ ! -d "${CLAUDE_SRC}" ]]; then
@@ -39,7 +39,20 @@ fi
 mkdir -p "${CLAUDE_DIR}"
 
 # ─── 파일 심볼릭 링크 헬퍼 ───────────────────────────────────────────────────
-# 단일 파일을 symlink로 설치. 기존 파일이 있으면 .bak으로 백업.
+# 단일 파일을 symlink로 설치. 기존 항목이 있으면 .bak으로 백업.
+backup_existing_path() {
+  local dst="$1" label="$2"
+  local backup="${dst}.bak"
+
+  if [[ -L "${dst}" ]]; then
+    rm "${dst}"
+  elif [[ -e "${dst}" ]]; then
+    rm -rf "${backup}"
+    mv "${dst}" "${backup}"
+    log_info "${label}: 기존 항목 백업 → ${backup}"
+  fi
+}
+
 link_file() {
   local src="$1" dst="$2" label="$3"
 
@@ -49,12 +62,7 @@ link_file() {
   fi
 
   mkdir -p "$(dirname "${dst}")"
-  if [[ -L "${dst}" ]]; then
-    rm "${dst}"
-  elif [[ -f "${dst}" ]]; then
-    mv "${dst}" "${dst}.bak"
-    log_info "${label}: 기존 파일 백업 → ${dst}.bak"
-  fi
+  backup_existing_path "${dst}" "${label}"
   ln -s "${src}" "${dst}"
   log_ok "${label} → ${src}"
 }
@@ -79,12 +87,7 @@ link_dir_entries() {
     name="$(basename "${entry}")"
     dst_entry="${dst_dir}/${name}"
 
-    if [[ -L "${dst_entry}" ]]; then
-      rm "${dst_entry}"
-    elif [[ -d "${dst_entry}" ]]; then
-      mv "${dst_entry}" "${dst_entry}.bak"
-      log_info "${label}/${name}: 기존 디렉토리 백업 → ${dst_entry}.bak"
-    fi
+    backup_existing_path "${dst_entry}" "${label}/${name}"
     ln -s "${entry%/}" "${dst_entry}"
     log_info "${label}/${name}"
     ((count++)) || true

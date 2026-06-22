@@ -61,6 +61,7 @@ alias zshrc='vi ~/.zshrc'
 alias vimrc='vi ~/.vimrc'
 alias cc='claude'
 alias cx='codex'
+alias cws='~/ai-workspace'
 
 
 # Mistakes
@@ -121,7 +122,6 @@ function cd {
   fi
 }
 
-alias cws='~/claude-workspace'
 
 upgrade-claude() {
     brew upgrade claude-code@latest

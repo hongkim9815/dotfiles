@@ -4,26 +4,40 @@ DIRNAME="$(dirname "$0")"
 DIR="$(cd "$DIRNAME" && pwd)"
 PRIVATE_DIR="$HOME/.dotfiles-private"
 
+backup_existing_path () {
+  local path="$1"
+  local backup="${path}.bak"
+
+  if [[ -L "$path" ]]; then
+    rm "$path"
+  elif [[ -e "$path" ]]; then
+    rm -rf "$backup"
+    mv "$path" "$backup"
+  fi
+}
+
+link_path () {
+  local new="$1"
+  local old="$2"
+
+  mkdir -p "$(dirname "$old")"
+  backup_existing_path "$old"
+  ln -s "$new" "$old"
+}
+
 setup () {
   OLD="$HOME/.$1"
   NEW="$DIR/$1"
   [[ -s "$PRIVATE_DIR/$1" ]] && NEW="$PRIVATE_DIR/$1"
 
-  if [ -f "$OLD" ]; then
-    if [ -L "$OLD" ]; then
-      rm "$OLD"
-    else
-      mv "$OLD" "$OLD.bak"
-    fi
-  fi
-  ln -s "$NEW" "$OLD"
+  link_path "$NEW" "$OLD"
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install vim git zsh curl gnu-which mise gitmoji prettier
   brew upgrade vim git zsh curl gnu-which mise gitmoji prettier
 
-  [[ -f "$HOME/Library/KeyBindings/DefaultKeyBinding.dict" ]] || (mkdir -p "$HOME/Library/KeyBindings" && ln -s "$DIR/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict")
+  link_path "$DIR/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo apt-get update
@@ -54,7 +68,7 @@ setup theme.zshrc
 
 
 # Claude settings
-[[ -x "$DIR/install_claude.sh" ]] && "$DIR/install_claude.sh"
+[[ -x "$DIR/install-agent.sh" ]] && "$DIR/install-agent.sh"
 
 # Private Claude settings
 PRIVATE_CLAUDE_DIR="$HOME/.dotfiles-private"
@@ -63,4 +77,3 @@ PRIVATE_CLAUDE_DIR="$HOME/.dotfiles-private"
 vim +PlugInstall +qall > /dev/null
 chsh $USER -s $(which zsh)
 exec zsh -l
-

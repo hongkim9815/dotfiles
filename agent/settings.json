@@ -1,7 +1,7 @@
 {
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-7[1m]",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-8[1m]",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6[1m]"
   },
   "permissions": {
@@ -73,7 +73,7 @@
       "Bash(env*)"
     ]
   },
-  "model": "opusplan",
+  "model": "opus",
   "hooks": {
     "Notification": [
       {
